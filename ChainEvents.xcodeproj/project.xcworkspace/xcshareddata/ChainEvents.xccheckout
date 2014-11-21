@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>CA7DD621-980F-4BCA-A2B9-DD985873B4EB</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ChainEvents</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>144F68D83B18D766F19D477AAAC68C77BBE2894D</key>
+		<string>https://github.com/Gerosullivan/ChainEvents.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ChainEvents.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>144F68D83B18D766F19D477AAAC68C77BBE2894D</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Gerosullivan/ChainEvents.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>144F68D83B18D766F19D477AAAC68C77BBE2894D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>144F68D83B18D766F19D477AAAC68C77BBE2894D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ChainEvents</string>
+		</dict>
+	</array>
+</dict>
+</plist>
