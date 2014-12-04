@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A715FA51A2E1BF4008874EC /* GOTimersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A715FA41A2E1BF4008874EC /* GOTimersViewController.m */; };
+		7A715FA81A2E1D75008874EC /* GOTimerStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A715FA71A2E1D75008874EC /* GOTimerStore.m */; };
+		7A715FAB1A2E2085008874EC /* GOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A715FAA1A2E2085008874EC /* GOTimer.m */; };
 		7A9DE9651A1FA70900D10C37 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9DE9641A1FA70900D10C37 /* main.m */; };
 		7A9DE9681A1FA70900D10C37 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9DE9671A1FA70900D10C37 /* AppDelegate.m */; };
-		7A9DE96B1A1FA70900D10C37 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9DE96A1A1FA70900D10C37 /* FirstViewController.m */; };
-		7A9DE96E1A1FA70900D10C37 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9DE96D1A1FA70900D10C37 /* SecondViewController.m */; };
 		7A9DE9711A1FA70900D10C37 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A9DE96F1A1FA70900D10C37 /* Main.storyboard */; };
 		7A9DE9731A1FA70900D10C37 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A9DE9721A1FA70900D10C37 /* Images.xcassets */; };
 		7A9DE9761A1FA70900D10C37 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A9DE9741A1FA70900D10C37 /* LaunchScreen.xib */; };
@@ -28,15 +29,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7A715FA31A2E1BF4008874EC /* GOTimersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOTimersViewController.h; sourceTree = "<group>"; };
+		7A715FA41A2E1BF4008874EC /* GOTimersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOTimersViewController.m; sourceTree = "<group>"; };
+		7A715FA61A2E1D75008874EC /* GOTimerStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOTimerStore.h; sourceTree = "<group>"; };
+		7A715FA71A2E1D75008874EC /* GOTimerStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOTimerStore.m; sourceTree = "<group>"; };
+		7A715FA91A2E2085008874EC /* GOTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOTimer.h; sourceTree = "<group>"; };
+		7A715FAA1A2E2085008874EC /* GOTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOTimer.m; sourceTree = "<group>"; };
 		7A9DE95F1A1FA70900D10C37 /* ChainEvents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChainEvents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A9DE9631A1FA70900D10C37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A9DE9641A1FA70900D10C37 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7A9DE9661A1FA70900D10C37 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7A9DE9671A1FA70900D10C37 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		7A9DE9691A1FA70900D10C37 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		7A9DE96A1A1FA70900D10C37 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		7A9DE96C1A1FA70900D10C37 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		7A9DE96D1A1FA70900D10C37 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		7A9DE9701A1FA70900D10C37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7A9DE9721A1FA70900D10C37 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7A9DE9751A1FA70900D10C37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -84,12 +87,14 @@
 		7A9DE9611A1FA70900D10C37 /* ChainEvents */ = {
 			isa = PBXGroup;
 			children = (
+				7A715FA31A2E1BF4008874EC /* GOTimersViewController.h */,
+				7A715FA41A2E1BF4008874EC /* GOTimersViewController.m */,
+				7A715FA61A2E1D75008874EC /* GOTimerStore.h */,
+				7A715FA71A2E1D75008874EC /* GOTimerStore.m */,
+				7A715FA91A2E2085008874EC /* GOTimer.h */,
+				7A715FAA1A2E2085008874EC /* GOTimer.m */,
 				7A9DE9661A1FA70900D10C37 /* AppDelegate.h */,
 				7A9DE9671A1FA70900D10C37 /* AppDelegate.m */,
-				7A9DE9691A1FA70900D10C37 /* FirstViewController.h */,
-				7A9DE96A1A1FA70900D10C37 /* FirstViewController.m */,
-				7A9DE96C1A1FA70900D10C37 /* SecondViewController.h */,
-				7A9DE96D1A1FA70900D10C37 /* SecondViewController.m */,
 				7A9DE96F1A1FA70900D10C37 /* Main.storyboard */,
 				7A9DE9721A1FA70900D10C37 /* Images.xcassets */,
 				7A9DE9741A1FA70900D10C37 /* LaunchScreen.xib */,
@@ -225,10 +230,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A9DE96E1A1FA70900D10C37 /* SecondViewController.m in Sources */,
 				7A9DE9681A1FA70900D10C37 /* AppDelegate.m in Sources */,
-				7A9DE96B1A1FA70900D10C37 /* FirstViewController.m in Sources */,
 				7A9DE9651A1FA70900D10C37 /* main.m in Sources */,
+				7A715FA81A2E1D75008874EC /* GOTimerStore.m in Sources */,
+				7A715FA51A2E1BF4008874EC /* GOTimersViewController.m in Sources */,
+				7A715FAB1A2E2085008874EC /* GOTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +360,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ChainEvents/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -365,6 +372,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ChainEvents/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -423,6 +431,7 @@
 				7A9DE9871A1FA70900D10C37 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7A9DE9881A1FA70900D10C37 /* Build configuration list for PBXNativeTarget "ChainEventsTests" */ = {
 			isa = XCConfigurationList;
@@ -431,6 +440,7 @@
 				7A9DE98A1A1FA70900D10C37 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
