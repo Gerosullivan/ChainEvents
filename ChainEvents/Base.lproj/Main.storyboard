@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Setup-->
+        <!--Chain Events-->
         <scene sceneID="jbw-eS-Dcy">
             <objects>
                 <tableViewController id="Wbg-mM-Wpq" customClass="GOTimersViewController" sceneMemberID="viewController">
@@ -46,15 +46,75 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Setup" image="setup" id="6d3-8f-ahY"/>
+                    <navigationItem key="navigationItem" title="Chain Events" id="732-Ro-Mxl">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="zyq-pr-4KU">
+                            <connections>
+                                <segue destination="g2b-fg-HqT" kind="show" id="CbL-pK-3Zx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eI9-cy-eJZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="-317"/>
+            <point key="canvasLocation" x="1472" y="-301"/>
         </scene>
-        <!--View Controller-->
+        <!--Setup-->
+        <scene sceneID="3Qj-uU-BRh">
+            <objects>
+                <navigationController title="Setup" id="7Ya-eS-VQB" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Setup" image="setup" id="nrh-iM-K6M"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jMZ-9X-Pzm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Wbg-mM-Wpq" kind="relationship" relationship="rootViewController" id="NAs-zf-UZy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zce-PR-9F8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="750" y="-301"/>
+        </scene>
+        <!--Play-->
+        <scene sceneID="vbu-Jm-JzW">
+            <objects>
+                <navigationController id="9pq-u7-Jiy" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Play" image="play" id="MoA-5D-Q7Q"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ba5-HQ-IYt">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="3TK-9L-KhS" kind="relationship" relationship="rootViewController" id="oEu-UI-gkr"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="se2-G2-vOb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="750" y="410"/>
+        </scene>
+        <!--Play-->
+        <scene sceneID="bGb-do-DHD">
+            <objects>
+                <viewController id="3TK-9L-KhS" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0OW-Y6-bKx"/>
+                        <viewControllerLayoutGuide type="bottom" id="nyg-od-Vnv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="izv-hN-GzI">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Play" id="7AZ-9q-QQS"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ViA-bU-1JA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1472" y="410"/>
+        </scene>
+        <!--Detail View Controller-->
         <scene sceneID="lCf-pO-kjc">
             <objects>
-                <viewController id="g2b-fg-HqT" sceneMemberID="viewController">
+                <viewController id="g2b-fg-HqT" customClass="GODetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aah-I5-hL4"/>
                         <viewControllerLayoutGuide type="bottom" id="ky8-vl-Nj0"/>
@@ -63,22 +123,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Timer Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9OP-D0-emo">
-                                <rect key="frame" x="0.0" y="28" width="600" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9OP-D0-emo">
+                                <rect key="frame" x="0.0" y="104" width="600" height="45"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="SWg-10-q77"/>
+                                    <constraint firstAttribute="height" constant="45" id="SWg-10-q77"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Duration" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4wK-jJ-LbN">
-                                <rect key="frame" x="0.0" y="88" width="600" height="30"/>
+                                <rect key="frame" x="0.0" y="179" width="600" height="45"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="nIe-cm-CVg"/>
+                                    <constraint firstAttribute="height" constant="45" id="nIe-cm-CVg"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
@@ -88,33 +148,18 @@
                             <constraint firstItem="9OP-D0-emo" firstAttribute="leading" secondItem="uUl-Pl-yFs" secondAttribute="leadingMargin" constant="-16" id="GU8-Zs-QKT"/>
                             <constraint firstItem="4wK-jJ-LbN" firstAttribute="top" secondItem="9OP-D0-emo" secondAttribute="bottom" constant="30" id="Oar-JO-2YZ"/>
                             <constraint firstItem="4wK-jJ-LbN" firstAttribute="leading" secondItem="uUl-Pl-yFs" secondAttribute="leadingMargin" constant="-16" id="Udu-lB-bdZ"/>
-                            <constraint firstItem="9OP-D0-emo" firstAttribute="top" secondItem="aah-I5-hL4" secondAttribute="bottom" constant="8" id="aAe-ac-kR8"/>
+                            <constraint firstItem="9OP-D0-emo" firstAttribute="top" secondItem="aah-I5-hL4" secondAttribute="bottom" constant="40" id="aAe-ac-kR8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4wK-jJ-LbN" secondAttribute="trailing" constant="-16" id="vT5-Zm-2Hy"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="DurationField" destination="4wK-jJ-LbN" id="g4q-8f-3XY"/>
+                        <outlet property="nameField" destination="9OP-D0-emo" id="SMT-n7-eMC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cuf-Wy-6SV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1457" y="-317"/>
-        </scene>
-        <!--Play-->
-        <scene sceneID="FZQ-vo-9I0">
-            <objects>
-                <viewController id="X5a-wW-hrY" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="O4K-eu-bSo"/>
-                        <viewControllerLayoutGuide type="bottom" id="nOF-Km-FYc"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="0Cc-l7-OqQ">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Play" image="play" id="KqM-ex-bH5"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QEB-5A-m4W" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="750" y="415"/>
+            <point key="canvasLocation" x="2179" y="-301"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -127,17 +172,20 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="Wbg-mM-Wpq" kind="relationship" relationship="viewControllers" id="UVC-BQ-UR6"/>
-                        <segue destination="X5a-wW-hrY" kind="relationship" relationship="viewControllers" id="vVI-kd-tjS"/>
+                        <segue destination="7Ya-eS-VQB" kind="relationship" relationship="viewControllers" id="Cr9-BR-76c"/>
+                        <segue destination="9pq-u7-Jiy" kind="relationship" relationship="viewControllers" id="7qJ-hK-btj"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="0.0"/>
+            <point key="canvasLocation" x="-4" y="30"/>
         </scene>
     </scenes>
     <resources>
         <image name="play" width="30" height="30"/>
         <image name="setup" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="QcI-QM-hWU"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A1FBC1D1A30FDF4003A6A91 /* GODetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A1FBC1C1A30FDF4003A6A91 /* GODetailViewController.m */; };
 		7A715FA51A2E1BF4008874EC /* GOTimersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A715FA41A2E1BF4008874EC /* GOTimersViewController.m */; };
 		7A715FA81A2E1D75008874EC /* GOTimerStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A715FA71A2E1D75008874EC /* GOTimerStore.m */; };
 		7A715FAB1A2E2085008874EC /* GOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A715FAA1A2E2085008874EC /* GOTimer.m */; };
@@ -29,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7A1FBC1B1A30FDF4003A6A91 /* GODetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GODetailViewController.h; sourceTree = "<group>"; };
+		7A1FBC1C1A30FDF4003A6A91 /* GODetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GODetailViewController.m; sourceTree = "<group>"; };
 		7A715FA31A2E1BF4008874EC /* GOTimersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOTimersViewController.h; sourceTree = "<group>"; };
 		7A715FA41A2E1BF4008874EC /* GOTimersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOTimersViewController.m; sourceTree = "<group>"; };
 		7A715FA61A2E1D75008874EC /* GOTimerStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOTimerStore.h; sourceTree = "<group>"; };
@@ -87,6 +90,8 @@
 		7A9DE9611A1FA70900D10C37 /* ChainEvents */ = {
 			isa = PBXGroup;
 			children = (
+				7A1FBC1B1A30FDF4003A6A91 /* GODetailViewController.h */,
+				7A1FBC1C1A30FDF4003A6A91 /* GODetailViewController.m */,
 				7A715FA31A2E1BF4008874EC /* GOTimersViewController.h */,
 				7A715FA41A2E1BF4008874EC /* GOTimersViewController.m */,
 				7A715FA61A2E1D75008874EC /* GOTimerStore.h */,
@@ -235,6 +240,7 @@
 				7A715FA81A2E1D75008874EC /* GOTimerStore.m in Sources */,
 				7A715FA51A2E1BF4008874EC /* GOTimersViewController.m in Sources */,
 				7A715FAB1A2E2085008874EC /* GOTimer.m in Sources */,
+				7A1FBC1D1A30FDF4003A6A91 /* GODetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
