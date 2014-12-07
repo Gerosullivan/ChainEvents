@@ -9,6 +9,7 @@
 #import "GOTimersViewController.h"
 #import "GOTimerStore.h"
 #import "GOTimer.h"
+#import "GODetailViewController.h"
 
 @interface GOTimersViewController ()
 
@@ -21,15 +22,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
+//    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    NSLog(@"Ger was here!");
 
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,10 +45,10 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    return 0;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//    // Return the number of sections.
+//    return 0;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [[[GOTimerStore sharedStore] allTimers] count];
@@ -55,7 +61,8 @@
     NSArray *timers = [[GOTimerStore sharedStore] allTimers];
     GOTimer *timer = timers[indexPath.row];
     
-    cell.textLabel.text = [timer description];
+    cell.textLabel.text = timer.timerName;
+    cell.detailTextLabel.text = [timer.timerDuration stringValue];
     
     return cell;
 }
@@ -96,15 +103,31 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString: @"newTimer"]) {
+        GOTimer *timer = [[GOTimerStore sharedStore] createTimer];
+        UINavigationController *nc = (UINavigationController *)segue.destinationViewController;
+        GODetailViewController *dvc = (GODetailViewController *)[nc topViewController];
+        dvc.timer = timer;
+    } else if ([segue.identifier isEqualToString:@"existingTimer"]) {
+        NSIndexPath *ip = [self.tableView indexPathForCell:sender];
+        NSArray *ts = [[GOTimerStore sharedStore] allTimers];
+        GOTimer *timer = ts[ip.row];
+        
+        // Set the timer pointer of the destination view controlller and set existing to true
+        GODetailViewController *dvc = segue.destinationViewController;
+        dvc.timer = timer;
+        dvc.existingTimer = YES;
+        
+    }
 }
-*/
+
 
 - (IBAction)addNewTimer:(id)sender {
     // Create a new GOTimer and add it to the store
@@ -112,7 +135,6 @@
     
     // Figue out where that item is in the array
     NSInteger *lastRow = [[[GOTimerStore sharedStore] allTimers] indexOfObject:newTimer];
-    
     
 }
 

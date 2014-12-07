@@ -10,4 +10,15 @@
 
 @implementation GOTimer
 
+- (instancetype)init {
+    self = [super init];
+    
+    if (self) {
+        _timerName = @"My New Timer";
+        _timerDuration = @12;
+        _timerRepeat = YES;
+    }
+    return self;
+}
+
 @end

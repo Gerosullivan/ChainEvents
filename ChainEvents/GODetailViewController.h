@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GOTimer.h"
 
 @interface GODetailViewController : UIViewController
+
+@property (nonatomic) BOOL existingTimer;
+@property (nonatomic) GOTimer *timer;
 
 @end

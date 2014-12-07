@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -35,7 +34,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="g2b-fg-HqT" kind="show" id="QcI-QM-hWU"/>
+                                    <segue destination="g2b-fg-HqT" kind="show" identifier="existingTimer" id="QcI-QM-hWU"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -49,7 +48,7 @@
                     <navigationItem key="navigationItem" title="Chain Events" id="732-Ro-Mxl">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="zyq-pr-4KU">
                             <connections>
-                                <segue destination="g2b-fg-HqT" kind="show" id="CbL-pK-3Zx"/>
+                                <segue destination="gYn-iM-a8r" kind="presentation" identifier="newTimer" id="ecR-K4-N6z"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -152,6 +151,13 @@
                             <constraint firstAttribute="trailingMargin" secondItem="4wK-jJ-LbN" secondAttribute="trailing" constant="-16" id="vT5-Zm-2Hy"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="dRG-eM-GQg">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="fdM-jk-vrg">
+                            <connections>
+                                <action selector="dismiss:" destination="g2b-fg-HqT" id="ngy-6Y-34k"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="DurationField" destination="4wK-jJ-LbN" id="g4q-8f-3XY"/>
                         <outlet property="nameField" destination="9OP-D0-emo" id="SMT-n7-eMC"/>
@@ -159,7 +165,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cuf-Wy-6SV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2179" y="-301"/>
+            <point key="canvasLocation" x="3005" y="-301"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="KXo-wo-zka">
+            <objects>
+                <navigationController id="gYn-iM-a8r" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MEd-4D-fpF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="g2b-fg-HqT" kind="relationship" relationship="rootViewController" id="dTr-MX-6Ic"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L6r-ja-xYf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2251" y="74"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
