@@ -25,7 +25,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.title = @"New Timer";
+    if (self.existingTimer) {
+        self.navigationItem.title = @"Edit Timer";
+    } else {
+        self.navigationItem.title = @"New Timer";
+    }
 //    self.navigationItem.rightBarButtonItem =
     
     self.nameField.text = self.timer.timerName;
