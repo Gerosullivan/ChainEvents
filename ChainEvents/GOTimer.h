@@ -12,6 +12,7 @@
 
 @property (nonatomic, copy) NSString *timerName;
 @property (nonatomic) NSNumber *timerDuration;
-@property (nonatomic) BOOL timerRepeat;
+@property (nonatomic) NSInteger timerRepeat;
+@property (nonatomic) NSArray *timerRepeatOptions;
 
 @end

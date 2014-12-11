@@ -1,5 +1,5 @@
 //
-//  GODetailViewController.h
+//  GORepeatViewController.h
 //  ChainEvents
 //
 //  Created by Ger O'Sullivan on 09/12/2014.
@@ -9,9 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GOTimer.h"
 
-@interface GODetailViewController : UITableViewController <UIPickerViewDataSource, UIPickerViewDelegate>
-
-@property (nonatomic) BOOL existingTimer;
+@interface GORepeatViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (nonatomic) GOTimer *timer;
 
