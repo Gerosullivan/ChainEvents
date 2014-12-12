@@ -83,7 +83,6 @@
 #pragma mark - Navigation
 
 - (IBAction)done:(id)sender {
-    NSLog(@"pvc: %@", self.presentedViewController);
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -139,7 +138,7 @@
     
     int interval = secsInt + (minsInt*60) + (hoursInt*3600);
     
-    NSLog(@"hours: %d ... mins: %d .... sec: %d .... interval: %d", hoursInt, minsInt, secsInt, interval);
+//    NSLog(@"hours: %d ... mins: %d .... sec: %d .... interval: %d", hoursInt, minsInt, secsInt, interval);
     
     return interval;
     
