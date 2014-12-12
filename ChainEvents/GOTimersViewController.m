@@ -59,6 +59,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
     
     // Configure the cell...
+    cell.textLabel.text = [NSString stringWithFormat:@"%li", indexPath.row+1];
+    
     NSArray *timers = [[GOTimerStore sharedStore] allTimers];
     GOTimer *timer = timers[indexPath.row];
     
@@ -70,10 +72,10 @@
     NSInteger minutes = (ti / 60) % 60;
     NSInteger hours = (ti / 3600);
     
-    TimerDetail = [NSMutableString stringWithFormat:@"%02ld:%02ld:%02ld", (long)hours, (long)minutes, (long)seconds];
+    TimerDetail = [NSMutableString stringWithFormat:@"%02ld:%02ld.%02ld", (long)hours, (long)minutes, (long)seconds];
     
     if (timer.timerRepeat != 0) {
-        NSString *repeatText = [NSString stringWithFormat:@" x%ld", (long)timer.timerRepeat+1];
+        NSString *repeatText = [NSString stringWithFormat:@" - Repeat %@", timer.timerRepeatOptions[timer.timerRepeat]];
         [TimerDetail appendString:repeatText];
     }
     

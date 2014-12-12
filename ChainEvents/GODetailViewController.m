@@ -8,6 +8,7 @@
 
 #import "GODetailViewController.h"
 #import "GORepeatViewController.h"
+#import "GOTimerStore.h"
 
 @interface GODetailViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
@@ -65,10 +66,12 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    self.timer.timerName = self.nameField.text;
-//    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
-//    [nf setNumberStyle:NSNumberFormatterDecimalStyle];
-//    self.timer.timerDuration = [nf numberFromString: self.DurationField.text];
+    if (self.timer.timerDuration == 0) {
+        [[GOTimerStore sharedStore] removeTimer:self.timer];
+    } else {
+        self.timer.timerName = self.nameField.text;
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {

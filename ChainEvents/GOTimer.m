@@ -14,10 +14,10 @@
     self = [super init];
     
     if (self) {
-        _timerName = @"My New Timer";
-        _timerDuration = 1200;
+        _timerName = @"";
+        _timerDuration = 0;
         _timerRepeat = 0;
-        _timerRepeatOptions = @[@"Never", @"2 Times", @"3 Times", @"4 Times", @"5 Times", @"6 Times", @"7 Times", @"8 Times", @"9 Times", @"10 Times", @"11 Times", @"12 Times", @"13 Times"];
+        _timerRepeatOptions = @[@"Never", @"2 times", @"3 times", @"4 times", @"5 times", @"6 times", @"7 times", @"8 times", @"9 times", @"10 times", @"11 times", @"12 times"];
     }
     return self;
 }
