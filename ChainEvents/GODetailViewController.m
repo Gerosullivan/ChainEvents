@@ -39,17 +39,14 @@
     self.durationPicker.delegate = self;
     self.durationPicker.dataSource = self;
     
-//    UILabel *hourLabel = [[UILabel alloc] initWithFrame:CGRectMake(42, self.durationPicker.frame.size.height / 2 - 15, 75, 30)];
-//    hourLabel.text = @"hour";
-//    [self.durationPicker addSubview:hourLabel];
+    NSInteger ti = (NSInteger)self.timer.timerDuration;
+    NSInteger seconds = ti % 60;
+    NSInteger minutes = (ti / 60) % 60;
+    NSInteger hours = (ti / 3600);
     
-//    UILabel *minsLabel = [[UILabel alloc] initWithFrame:CGRectMake(42 + (self.durationPicker.frame.size.width / 3), self.durationPicker.frame.size.height / 2 - 15, 75, 30)];
-//    minsLabel.text = @"min";
-//    [self.durationPicker addSubview:minsLabel];
-//    
-//    UILabel *secsLabel = [[UILabel alloc] initWithFrame:CGRectMake(42 + ((self.durationPicker.frame.size.width / 3) * 2), self.durationPicker.frame.size.height / 2 - 15, 75, 30)];
-//    secsLabel.text = @"sec";
-//    [self.durationPicker addSubview:secsLabel];
+    [self.durationPicker selectRow:hours inComponent:0 animated:NO];
+    [self.durationPicker selectRow:minutes inComponent:1 animated:NO];
+    [self.durationPicker selectRow:seconds inComponent:2 animated:NO];
     
 }
 
@@ -116,6 +113,33 @@
     columnView.textAlignment = NSTextAlignmentLeft;
     
     return columnView;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    self.timer.timerDuration = (NSTimeInterval)self.calculateTimeFromPicker;
+    
+}
+
+-(NSInteger)calculateTimeFromPicker
+{
+    
+    NSString *hoursStr = [NSString stringWithFormat:@"%ld",(long)[self.durationPicker selectedRowInComponent:0]];
+    
+    NSString *minsStr = [NSString stringWithFormat:@"%ld",(long)[self.durationPicker selectedRowInComponent:1]];
+    
+    NSString *secsStr = [NSString stringWithFormat:@"%ld",(long)[self.durationPicker selectedRowInComponent:2]];
+    
+    int hoursInt = [hoursStr intValue];
+    int minsInt = [minsStr intValue];
+    int secsInt = [secsStr intValue];
+    
+    
+    int interval = secsInt + (minsInt*60) + (hoursInt*3600);
+    
+    NSLog(@"hours: %d ... mins: %d .... sec: %d .... interval: %d", hoursInt, minsInt, secsInt, interval);
+    
+    return interval;
+    
 }
 
 @end

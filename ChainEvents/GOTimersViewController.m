@@ -14,6 +14,7 @@
 @interface GOTimersViewController ()
 
 @property (nonatomic, strong) IBOutlet UIView *headerView;
+- (NSString *)stringFromTimeInterval:(NSTimeInterval)interval;
 
 @end
 
@@ -62,7 +63,21 @@
     GOTimer *timer = timers[indexPath.row];
     
     cell.textLabel.text = timer.timerName;
-    cell.detailTextLabel.text = [timer.timerDuration stringValue];
+    
+    NSMutableString *TimerDetail = [[NSMutableString alloc] init];
+    NSInteger ti = (NSInteger)timer.timerDuration;
+    NSInteger seconds = ti % 60;
+    NSInteger minutes = (ti / 60) % 60;
+    NSInteger hours = (ti / 3600);
+    
+    TimerDetail = [NSMutableString stringWithFormat:@"%02ld:%02ld:%02ld", (long)hours, (long)minutes, (long)seconds];
+    
+    if (timer.timerRepeat != 0) {
+        NSString *repeatText = [NSString stringWithFormat:@" x%ld", (long)timer.timerRepeat+1];
+        [TimerDetail appendString:repeatText];
+    }
+    
+    cell.detailTextLabel.text = TimerDetail;
     
     return cell;
 }
@@ -137,7 +152,5 @@
     NSInteger *lastRow = [[[GOTimerStore sharedStore] allTimers] indexOfObject:newTimer];
     
 }
-
-
 
 @end

@@ -11,7 +11,7 @@
 @interface GOTimer : NSObject
 
 @property (nonatomic, copy) NSString *timerName;
-@property (nonatomic) NSNumber *timerDuration;
+@property (nonatomic) NSTimeInterval timerDuration;
 @property (nonatomic) NSInteger timerRepeat;
 @property (nonatomic) NSArray *timerRepeatOptions;
 
