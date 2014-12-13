@@ -161,10 +161,10 @@
 
 - (IBAction)addNewTimer:(id)sender {
     // Create a new GOTimer and add it to the store
-    GOTimer *newTimer = [[GOTimerStore sharedStore] createTimer];
+//    GOTimer *newTimer = [[GOTimerStore sharedStore] createTimer];
     
     // Figue out where that item is in the array
-    NSInteger *lastRow = [[[GOTimerStore sharedStore] allTimers] indexOfObject:newTimer];
+//    NSInteger *lastRow = [[[GOTimerStore sharedStore] allTimers] indexOfObject:newTimer];
     
 }
 

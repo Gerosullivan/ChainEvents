@@ -18,6 +18,7 @@
 		7A9DE9761A1FA70900D10C37 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A9DE9741A1FA70900D10C37 /* LaunchScreen.xib */; };
 		7A9DE9821A1FA70900D10C37 /* ChainEventsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9DE9811A1FA70900D10C37 /* ChainEventsTests.m */; };
 		7ADA4D051A37B46F0088B3D9 /* GORepeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ADA4D041A37B46F0088B3D9 /* GORepeatViewController.m */; };
+		C28F1D951A3CC82A00531EE3 /* GOPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C28F1D941A3CC82A00531EE3 /* GOPlayViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,8 @@
 		7A9DE9811A1FA70900D10C37 /* ChainEventsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChainEventsTests.m; sourceTree = "<group>"; };
 		7ADA4D031A37B46F0088B3D9 /* GORepeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GORepeatViewController.h; sourceTree = "<group>"; };
 		7ADA4D041A37B46F0088B3D9 /* GORepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GORepeatViewController.m; sourceTree = "<group>"; };
+		C28F1D931A3CC82A00531EE3 /* GOPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOPlayViewController.h; sourceTree = "<group>"; };
+		C28F1D941A3CC82A00531EE3 /* GOPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOPlayViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +96,8 @@
 		7A9DE9611A1FA70900D10C37 /* ChainEvents */ = {
 			isa = PBXGroup;
 			children = (
+				C28F1D931A3CC82A00531EE3 /* GOPlayViewController.h */,
+				C28F1D941A3CC82A00531EE3 /* GOPlayViewController.m */,
 				7ADA4D031A37B46F0088B3D9 /* GORepeatViewController.h */,
 				7ADA4D041A37B46F0088B3D9 /* GORepeatViewController.m */,
 				7A6599631A379ED200212583 /* GODetailViewController.h */,
@@ -244,6 +249,7 @@
 				7A9DE9651A1FA70900D10C37 /* main.m in Sources */,
 				7A715FA81A2E1D75008874EC /* GOTimerStore.m in Sources */,
 				7A715FA51A2E1BF4008874EC /* GOTimersViewController.m in Sources */,
+				C28F1D951A3CC82A00531EE3 /* GOPlayViewController.m in Sources */,
 				7A715FAB1A2E2085008874EC /* GOTimer.m in Sources */,
 				7ADA4D051A37B46F0088B3D9 /* GORepeatViewController.m in Sources */,
 				7A6599651A379ED200212583 /* GODetailViewController.m in Sources */,
@@ -370,6 +376,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ChainEvents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -382,6 +389,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ChainEvents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
