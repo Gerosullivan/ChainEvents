@@ -11,13 +11,6 @@
 #import "GOTimer.h"
 #import "GODetailViewController.h"
 
-@interface GOTimersViewController ()
-
-@property (nonatomic, strong) IBOutlet UIView *headerView;
-- (NSString *)stringFromTimeInterval:(NSTimeInterval)interval;
-
-@end
-
 @implementation GOTimersViewController
 
 - (void)viewDidLoad {
@@ -30,7 +23,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
+    [self.tableView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -59,12 +52,17 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    cell.textLabel.text = [NSString stringWithFormat:@"%li", indexPath.row+1];
+    
+    UILabel *orderLabel, *nameLabel, *detailLabel;
+    
+    orderLabel = (UILabel *)[cell viewWithTag:1];
+    orderLabel.text = [NSString stringWithFormat:@"%ld", indexPath.row + 1];
     
     NSArray *timers = [[GOTimerStore sharedStore] allTimers];
     GOTimer *timer = timers[indexPath.row];
     
-    cell.textLabel.text = timer.timerName;
+    nameLabel = (UILabel *)[cell viewWithTag:2];
+    nameLabel.text = timer.timerName;
     
     NSMutableString *TimerDetail = [[NSMutableString alloc] init];
     NSInteger ti = (NSInteger)timer.timerDuration;
@@ -79,9 +77,24 @@
         [TimerDetail appendString:repeatText];
     }
     
-    cell.detailTextLabel.text = TimerDetail;
+    detailLabel = (UILabel *)[cell viewWithTag:3];
+    detailLabel.text = TimerDetail;
+    
+
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UILabel *nameLabel, *detailLabel;
+    
+    nameLabel = (UILabel *)[cell viewWithTag:2];
+    detailLabel = (UILabel *)[cell viewWithTag:3];
+    
+    if ([nameLabel.text isEqual: @""]) {
+        detailLabel.frame = CGRectMake(36, 22, detailLabel.frame.size.width, detailLabel.frame.size.height);
+    }
 }
 
 /*
@@ -148,10 +161,10 @@
 
 - (IBAction)addNewTimer:(id)sender {
     // Create a new GOTimer and add it to the store
-    GOTimer *newTimer = [[GOTimerStore sharedStore] createTimer];
+//    GOTimer *newTimer = [[GOTimerStore sharedStore] createTimer];
     
     // Figue out where that item is in the array
-    NSInteger *lastRow = [[[GOTimerStore sharedStore] allTimers] indexOfObject:newTimer];
+//    NSInteger *lastRow = [[[GOTimerStore sharedStore] allTimers] indexOfObject:newTimer];
     
 }
 

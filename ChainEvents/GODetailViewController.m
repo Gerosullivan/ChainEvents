@@ -79,11 +79,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove seperator inset
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    // Prevent the cell from inheriting the Table View's margin settings
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    
+    // Explictly set your cell's layout margins
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
 
 #pragma mark - Navigation
 
 - (IBAction)done:(id)sender {
-    NSLog(@"pvc: %@", self.presentedViewController);
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -112,7 +129,7 @@
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
     UILabel *columnView = [[UILabel alloc] initWithFrame:CGRectMake(35, 0, self.view.frame.size.width/3 - 35, 30)];
-    columnView.text = [NSString stringWithFormat:@"%lu", row];
+    columnView.text = [NSString stringWithFormat:@"%lu", (long)row];
     columnView.textAlignment = NSTextAlignmentLeft;
     
     return columnView;
@@ -139,7 +156,7 @@
     
     int interval = secsInt + (minsInt*60) + (hoursInt*3600);
     
-    NSLog(@"hours: %d ... mins: %d .... sec: %d .... interval: %d", hoursInt, minsInt, secsInt, interval);
+//    NSLog(@"hours: %d ... mins: %d .... sec: %d .... interval: %d", hoursInt, minsInt, secsInt, interval);
     
     return interval;
     
