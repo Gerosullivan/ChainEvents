@@ -59,6 +59,10 @@
     }
 }
 
+- (CGSize)intrinsicContentSize {
+    return CGSizeMake([self bounds].size.width, [self bounds].size.height);
+}
+
 //- (void)setEnabled:(BOOL)enabled {
 //    [self.circleLayer setFillColor:[UIColor whiteColor].CGColor];
 //    if (enabled) {

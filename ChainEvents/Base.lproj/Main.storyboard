@@ -129,13 +129,13 @@
                         <sections>
                             <tableViewSection id="nWE-vN-et0">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" rowHeight="200" id="Xjn-Dw-LCb">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" rowHeight="166" id="Xjn-Dw-LCb">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xjn-Dw-LCb" id="Ocq-S6-3q1">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QYM-09-Thl">
-                                                    <rect key="frame" x="495" y="16" width="97" height="38"/>
+                                                    <rect key="frame" x="495" y="8" width="97" height="38"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="38" id="jV8-gc-jbY"/>
                                                         <constraint firstAttribute="width" constant="97" id="w72-zr-Xye"/>
@@ -145,7 +145,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:35.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDw-yP-BFD">
-                                                    <rect key="frame" x="295" y="62" width="297" height="71"/>
+                                                    <rect key="frame" x="295" y="46" width="297" height="71"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="71" id="azE-U3-Kvn"/>
                                                         <constraint firstAttribute="width" constant="297" id="qM2-m9-tOt"/>
@@ -155,7 +155,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Proin Facilisis" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7a-nI-hvR">
-                                                    <rect key="frame" x="268" y="141" width="324" height="38"/>
+                                                    <rect key="frame" x="268" y="117" width="324" height="38"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="324" id="Uda-X8-GIH"/>
                                                         <constraint firstAttribute="height" constant="38" id="yj0-f8-aLK"/>
@@ -167,10 +167,10 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="QYM-09-Thl" secondAttribute="trailing" id="6Rk-TE-5V7"/>
-                                                <constraint firstItem="QYM-09-Thl" firstAttribute="top" secondItem="Ocq-S6-3q1" secondAttribute="topMargin" constant="8" id="Zs7-vi-8c3"/>
+                                                <constraint firstItem="QYM-09-Thl" firstAttribute="top" secondItem="Ocq-S6-3q1" secondAttribute="topMargin" id="Zs7-vi-8c3"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="wDw-yP-BFD" secondAttribute="trailing" id="jSr-hj-hwo"/>
-                                                <constraint firstItem="c7a-nI-hvR" firstAttribute="top" secondItem="wDw-yP-BFD" secondAttribute="bottom" constant="8" id="odw-Tl-FO3"/>
-                                                <constraint firstItem="wDw-yP-BFD" firstAttribute="top" secondItem="QYM-09-Thl" secondAttribute="bottom" constant="8" id="ro3-AN-1BK"/>
+                                                <constraint firstItem="c7a-nI-hvR" firstAttribute="top" secondItem="wDw-yP-BFD" secondAttribute="bottom" id="odw-Tl-FO3"/>
+                                                <constraint firstItem="wDw-yP-BFD" firstAttribute="top" secondItem="QYM-09-Thl" secondAttribute="bottom" id="ro3-AN-1BK"/>
                                                 <constraint firstItem="c7a-nI-hvR" firstAttribute="trailing" secondItem="Ocq-S6-3q1" secondAttribute="trailingMargin" id="vz4-JZ-wA1"/>
                                             </constraints>
                                         </tableViewCellContentView>
