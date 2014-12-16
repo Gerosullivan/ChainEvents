@@ -34,16 +34,16 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="22" id="y04-Ws-0eG"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LUa-lR-J6A">
-                                            <rect key="frame" x="36" y="35.5" width="523" height="21"/>
+                                            <rect key="frame" x="36" y="35" width="523" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="Kn1-bq-Va2"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                             <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -59,6 +59,7 @@
                                         <constraint firstItem="LUa-lR-J6A" firstAttribute="trailing" secondItem="sMD-iE-J4d" secondAttribute="trailingMargin" id="sm2-Nz-zni"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <inset key="separatorInset" minX="36" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <segue destination="o7b-Aw-Nto" kind="show" identifier="existingTimer" id="0ie-su-1Fx"/>
                                 </connections>
@@ -100,11 +101,11 @@
             </objects>
             <point key="canvasLocation" x="750" y="-301"/>
         </scene>
-        <!--Item-->
+        <!--Start-->
         <scene sceneID="MzI-UB-pPU">
             <objects>
                 <navigationController id="AN0-uh-wSY" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" image="play" id="os2-ex-qh1"/>
+                    <tabBarItem key="tabBarItem" title="Start" image="play" id="os2-ex-qh1"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="eD0-rk-CGZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -411,6 +412,6 @@
         <image name="setup" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zTK-qk-Q6Q"/>
+        <segue reference="0ie-su-1Fx"/>
     </inferredMetricsTieBreakers>
 </document>
