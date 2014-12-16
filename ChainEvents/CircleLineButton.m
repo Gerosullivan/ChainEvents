@@ -1,0 +1,71 @@
+//
+//  CircleLineButton.m
+//  ChainEvents
+//
+//  Created by Gerald O'Sullivan on 15/12/2014.
+//  Copyright (c) 2014 Ger O'Sullivan. All rights reserved.
+//
+
+#import "CircleLineButton.h"
+
+@interface CircleLineButton ()
+
+@property (nonatomic, strong) CAShapeLayer *circleLayer;
+@property (nonatomic, strong) UIColor *color;
+
+@end
+
+@implementation CircleLineButton
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+-(void)drawCircleButton:(UIColor *)color {
+    self.color = color;
+    
+    [self setTitleColor:color forState:UIControlStateNormal];
+    
+    self.circleLayer = [CAShapeLayer layer];
+    
+    [self.circleLayer setBounds:CGRectMake(0.0f, 0.0f, [self bounds].size.width, [self bounds].size.height)];
+    
+    [self.circleLayer setPosition:CGPointMake(CGRectGetMidX([self bounds]), CGRectGetMidY([self bounds]))];
+    
+    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+                                                                           
+    [self.circleLayer setPath:[path CGPath]];
+    
+//    [self.circleLayer setStrokeColor:[color CGColor]];
+    
+    [self.circleLayer setLineWidth:2.0f];
+    [self.circleLayer setFillColor:[[UIColor whiteColor] CGColor]];
+    
+    [[self layer] addSublayer:self.circleLayer];
+    
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+    if (highlighted) {
+        self.titleLabel.textColor = [UIColor whiteColor];
+        [self.circleLayer setFillColor:self.color.CGColor];
+    } else {
+        [self.circleLayer setFillColor:[UIColor whiteColor].CGColor];
+        self.titleLabel.textColor = self.color;
+    }
+}
+
+//- (void)setEnabled:(BOOL)enabled {
+//    [self.circleLayer setFillColor:[UIColor whiteColor].CGColor];
+//    if (enabled) {
+//        self.titleLabel.textColor = self.color;
+//    } else {
+//        self.titleLabel.textColor = [UIColor lightGrayColor];
+//    }
+//}
+
+@end
