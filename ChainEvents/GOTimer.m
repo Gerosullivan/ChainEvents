@@ -14,10 +14,11 @@
     self = [super init];
     
     if (self) {
-        _timerName = @"Ger test timer.";
+        _timerName = @"Ger test timer";
         _timerDuration = 1200;
         _timerRepeat = 1;
         _timerRepeatOptions = @[@"Never", @"2 times", @"3 times", @"4 times", @"5 times", @"6 times", @"7 times", @"8 times", @"9 times", @"10 times", @"11 times", @"12 times"];
+        _currentTimeLeft = 0;
     }
     return self;
 }

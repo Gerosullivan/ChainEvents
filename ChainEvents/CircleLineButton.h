@@ -11,5 +11,7 @@
 @interface CircleLineButton : UIButton
 
 - (void)drawCircleButton:(UIColor *)color;
+- (void)changeToSecondaryColor:(UIColor *)color;
+- (void)changeToPrimaryColor;
 
 @end

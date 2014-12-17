@@ -135,7 +135,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xjn-Dw-LCb" id="Ocq-S6-3q1">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QYM-09-Thl">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QYM-09-Thl">
                                                     <rect key="frame" x="495" y="8" width="97" height="38"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="38" id="jV8-gc-jbY"/>
@@ -145,7 +145,7 @@
                                                     <color key="textColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:35.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDw-yP-BFD">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:35.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDw-yP-BFD">
                                                     <rect key="frame" x="295" y="46" width="297" height="71"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="71" id="azE-U3-Kvn"/>
@@ -155,7 +155,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Proin Facilisis" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7a-nI-hvR">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Proin Facilisis" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7a-nI-hvR">
                                                     <rect key="frame" x="268" y="117" width="324" height="38"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="324" id="Uda-X8-GIH"/>
@@ -210,6 +210,11 @@
                     <navigationItem key="navigationItem" title="Play" id="fNQ-Ll-mjE">
                         <barButtonItem key="rightBarButtonItem" title="Item" id="vl3-wu-kms"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="timerLabel" destination="wDw-yP-BFD" id="RAa-52-rng"/>
+                        <outlet property="timerName" destination="c7a-nI-hvR" id="qjc-R4-Nrp"/>
+                        <outlet property="totalTimeLabel" destination="QYM-09-Thl" id="Krw-nD-YFK"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NKr-9b-c8J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

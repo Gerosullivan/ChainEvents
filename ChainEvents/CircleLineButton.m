@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong) CAShapeLayer *circleLayer;
 @property (nonatomic, strong) UIColor *color;
+@property (nonatomic, strong) UIColor *currentColor;
+
 
 @end
 
@@ -27,6 +29,7 @@
 
 -(void)drawCircleButton:(UIColor *)color {
     self.color = color;
+    self.currentColor = self.color;
     
     [self setTitleColor:color forState:UIControlStateNormal];
     
@@ -52,11 +55,21 @@
 - (void)setHighlighted:(BOOL)highlighted {
     if (highlighted) {
         self.titleLabel.textColor = [UIColor whiteColor];
-        [self.circleLayer setFillColor:self.color.CGColor];
+        [self.circleLayer setFillColor:self.currentColor.CGColor];
     } else {
         [self.circleLayer setFillColor:[UIColor whiteColor].CGColor];
-        self.titleLabel.textColor = self.color;
+        self.titleLabel.textColor = self.currentColor;
     }
+}
+
+- (void)changeToSecondaryColor:(UIColor *)color {
+    self.currentColor = color;
+    self.titleLabel.textColor = self.currentColor;
+}
+
+- (void)changeToPrimaryColor {
+    self.currentColor = self.color;
+    self.titleLabel.textColor = self.currentColor;
 }
 
 - (CGSize)intrinsicContentSize {

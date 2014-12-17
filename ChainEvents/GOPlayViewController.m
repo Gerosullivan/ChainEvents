@@ -8,9 +8,25 @@
 
 #import "GOPlayViewController.h"
 #import "CircleLineButton.h"
+#import "GOTimerStore.h"
+#import "GOTimer.h"
 
 @interface GOPlayViewController ()
 
+// Timer properties
+@property (nonatomic) GOTimer *currentTimerObject;
+@property (nonatomic, weak) NSTimer *repeatingTimer;
+@property (nonatomic) NSDate *startDate;
+@property (nonatomic) BOOL isPaused;
+@property (nonatomic) NSTimeInterval countdownFrom;
+@property (nonatomic) NSTimeInterval currentInterval;
+
+// Timer Labels
+@property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timerLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timerName;
+
+// Table footer elements
 @property (nonatomic) CircleLineButton *playButton;
 @property (nonatomic) CircleLineButton *pauseButton;
 @property (nonatomic) UILabel *statusLabel;
@@ -30,8 +46,17 @@
     
     self.tableView.sectionHeaderHeight = 1.0;
     
-   
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    if ([[[GOTimerStore sharedStore] allTimers] count] > 0) {
+        self.currentTimerObject = [[GOTimerStore sharedStore] allTimers][0];
+        
+        [self resetTimer];
+        [self renderTimerName];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,8 +64,107 @@
     // Dispose of any resources that can be recreated.
 }
 
+# pragma mark - Timer Methods
+
+- (void) updateTimer {
+    NSDate *currentDate = [NSDate date];
+    NSTimeInterval timeInterval = [currentDate timeIntervalSinceDate:self.startDate];
+    
+//    NSLog(@"time interval %f",timeInterval);
+    
+    self.currentInterval = self.countdownFrom - timeInterval;
+    
+    self.timerLabel.text = [self makeTimerString];
+}
+
+- (void)stopTimer {
+    [self.repeatingTimer invalidate];
+    self.repeatingTimer = nil;
+    [self updateTimer];
+    
+}
+
+- (void)resetTimer {
+    [self.playButton changeToPrimaryColor];
+    [self.playButton setTitle:@"Start" forState:UIControlStateNormal];
+    
+    [self.pauseButton setTitle:@"Pause" forState:UIControlStateNormal];
+    self.isPaused = NO;
+    self.pauseButton.alpha = 0.5;
+    [self.pauseButton setEnabled:NO];
+    
+    
+    self.countdownFrom = self.currentTimerObject.timerDuration;
+    
+    self.currentInterval = self.currentTimerObject.timerDuration;
+    self.timerLabel.text = [self makeTimerString];
+}
+
+- (void)pauseTimer {
+    NSLog(@"Pause timer");
+    if (self.isPaused) {
+        [self startTimer];
+        [self.pauseButton setTitle:@"Pause" forState:UIControlStateNormal];
+        self.isPaused = NO;
+    } else {
+        [self stopTimer];
+        [self.pauseButton setTitle:@"Resume" forState:UIControlStateNormal];
+        self.isPaused = YES;
+        self.countdownFrom = self.currentInterval;
+    }
+}
+
+- (void)startTimer {
+    [self.playButton changeToSecondaryColor:[UIColor colorWithRed:1 green:0.15 blue:0 alpha:1]];
+    [self.playButton setTitle:@"Reset" forState:UIControlStateNormal];
+    
+    [self.pauseButton setEnabled:YES];
+    self.pauseButton.alpha = 1;
+    self.isPaused = NO;
+    
+    if (self.repeatingTimer) {
+        [self.repeatingTimer invalidate];
+        self.repeatingTimer = nil;
+    }
+    
+    self.startDate = [NSDate date];
+    
+    self.repeatingTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
+                                                     target:self
+                                                   selector:@selector(updateTimer)
+                                                   userInfo:nil
+                                                    repeats:YES];
+}
+
+- (NSString *)makeTimerString {
+    NSInteger ti = (NSInteger)self.currentInterval;
+    NSInteger seconds = ti % 60;
+    NSInteger minutes = (ti / 60) % 60;
+    NSInteger hours = (ti / 3600);
+    
+    return [NSString stringWithFormat:@"%02ld:%02ld.%02ld", (long)hours, (long)minutes, (long)seconds];
+}
+
+- (void)renderTimerName {
+    NSMutableString *labelText = [NSMutableString stringWithString:self.currentTimerObject.timerName];
+    
+    NSString *prefix;
+    NSInteger index = [[[GOTimerStore sharedStore] allTimers] indexOfObjectIdenticalTo:self.currentTimerObject] +1;
+    if (self.currentTimerObject.timerRepeat > 0) {
+        prefix = [NSString stringWithFormat:@"%ld.%ld ", (long)index, self.currentTimerObject.timerRepeat];
+    } else {
+        prefix = [NSString stringWithFormat:@"%ld ", (long)index];
+    }
+    [labelText insertString:prefix atIndex:0];
+    
+    self.timerName.text = labelText;
+}
+
+# pragma mark - Table Methods
+
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    // Minimise the section header hack
     if (section == 0)
         return CGFLOAT_MIN;
     return tableView.sectionHeaderHeight;
@@ -86,6 +210,7 @@
     self.playButton = [[CircleLineButton alloc] initWithFrame:CGRectMake(0, 0, buttonSize, buttonSize)];
     [self.playButton drawCircleButton:[UIColor colorWithRed:0.3 green:0.85 blue:0.39 alpha:1]];
     [self.playButton setTitle:@"Start" forState:UIControlStateNormal];
+    [self.playButton addTarget:self action:@selector(playTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     self.playButton.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -94,9 +219,11 @@
     // Create the round Pause button
     
     self.pauseButton = [[CircleLineButton alloc] initWithFrame:CGRectMake(0, 0, buttonSize, buttonSize)];
-    [self.pauseButton drawCircleButton:[UIColor lightGrayColor]];
+    [self.pauseButton drawCircleButton:[UIColor darkGrayColor]];
     [self.pauseButton setTitle:@"Pause" forState:UIControlStateNormal];
     [self.pauseButton setEnabled:NO];
+    self.pauseButton.alpha = 0.5;
+    [self.pauseButton addTarget:self action:@selector(pauseTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     self.pauseButton.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -119,7 +246,7 @@
     NSDictionary *nameMap = @{@"playButton" : self.playButton,
                               @"pauseButton" : self.pauseButton,
                               @"statusLabel" : self.statusLabel};
-        
+    
     NSLayoutConstraint *horizontalConstraint1 = [NSLayoutConstraint constraintWithItem:self.playButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:footerButtons attribute:NSLayoutAttributeCenterX multiplier:0.5 constant:0];
     
     NSLayoutConstraint *horizontalConstraint2 = [NSLayoutConstraint constraintWithItem:self.pauseButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:footerButtons attribute:NSLayoutAttributeCenterX multiplier:1.5 constant:0];
@@ -152,6 +279,25 @@
     [footerButtons addConstraints:verticalConstraint2];
     
     return footerButtons;
+}
+
+#pragma mark - Button Actions
+
+-(IBAction)playTouched:(id)sender {
+    if ([self.playButton.titleLabel.text isEqual: @"Start"]) {
+        NSLog(@"Start touched");
+        [self resetTimer];
+        [self startTimer];
+    } else {
+        NSLog(@"Reset touched");
+        [self stopTimer];
+        [self resetTimer];
+    }
+
+}
+
+-(IBAction)pauseTouched:(id)sender {
+    [self pauseTimer];
 }
 
 /*
