@@ -31,9 +31,14 @@
 @property (nonatomic) CircleLineButton *pauseButton;
 @property (nonatomic) UILabel *statusLabel;
 
+@property (nonatomic) UIAlertView *alertView;
+@property (nonatomic, retain) AVAudioPlayer *soundPlayer;
+
 @end
 
 @implementation GOPlayViewController
+
+@synthesize soundPlayer;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -70,18 +75,38 @@
     NSDate *currentDate = [NSDate date];
     NSTimeInterval timeInterval = [currentDate timeIntervalSinceDate:self.startDate];
     
-//    NSLog(@"time interval %f",timeInterval);
-    
     self.currentInterval = self.countdownFrom - timeInterval;
     
     self.timerLabel.text = [self makeTimerString];
+    
+    if (self.currentInterval <= 0) {
+        self.alertView = nil;
+        self.alertView = [[UIAlertView alloc] initWithTitle:@"Timer Finished" message:@"Next Timer ready" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [self.alertView show];
+        NSLog(@"Timer Finised");
+        [self stopTimer];
+        
+        NSString *soundFilePath =
+        [[NSBundle mainBundle] pathForResource: @"alarm_beep"
+                                        ofType: @"caf"];
+        
+        NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: soundFilePath];
+        
+        AVAudioPlayer *newPlayer =
+        [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL
+                                               error: nil];
+        
+        self.soundPlayer = newPlayer;
+        
+        [soundPlayer prepareToPlay];
+        [soundPlayer setDelegate: self];
+    }
 }
 
 - (void)stopTimer {
+    NSLog(@"Stop timer");
     [self.repeatingTimer invalidate];
     self.repeatingTimer = nil;
-    [self updateTimer];
-    
 }
 
 - (void)resetTimer {
@@ -134,6 +159,15 @@
                                                    selector:@selector(updateTimer)
                                                    userInfo:nil
                                                     repeats:YES];
+
+    // Create Local Notification alerm to go off when timer finishes
+    UILocalNotification *alarm = [[UILocalNotification alloc] init];
+    alarm.alertBody = @"Timer finished";
+    NSDate *fireDate = [NSDate dateWithTimeInterval:self.currentInterval sinceDate:self.startDate];
+    alarm.fireDate = fireDate;
+    alarm.soundName = @"alarm_beep.caf";
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:alarm];
 }
 
 - (NSString *)makeTimerString {
@@ -300,14 +334,13 @@
     [self pauseTimer];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - Alert View Actions
+- (void)didPresentAlertView:(UIAlertView *)alertView {
+    [self.soundPlayer play];
 }
-*/
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [self.soundPlayer stop];
+}
 
 @end

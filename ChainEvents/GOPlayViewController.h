@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface GOPlayViewController : UITableViewController
+@interface GOPlayViewController : UITableViewController <UIAlertViewDelegate, AVAudioPlayerDelegate>
 
 @end
