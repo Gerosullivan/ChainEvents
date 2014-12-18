@@ -30,7 +30,7 @@
 
 // If a programmer calls init - let them know the error of there ways
 - (instancetype) init {
-    @throw [NSException exceptionWithName:@"Singleton" reason:@"Use +[GOItemStore sharedStore]" userInfo:nil];
+    @throw [NSException exceptionWithName:@"Singleton" reason:@"Use +[GOTimerStore sharedStore]" userInfo:nil];
     return nil;
 }
 
@@ -79,23 +79,23 @@
     [self.privateTimers insertObject:timer atIndex:toIndex];
 }
 
-- (GOTimer *)currentTimer {
-    NSUInteger currentTimerIndex = [self.privateTimers indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-        if ([(GOTimer*)obj countdownRemaining] > 0 || [(GOTimer*)obj currentRepeat] > 0) {
-            *stop = YES;
-            return idx;
-        }
-        return 0;
-    }];
-    if (currentTimerIndex != NSNotFound){
-        NSLog(@"timerIndex:%lu", (unsigned long)currentTimerIndex);
-        return self.privateTimers[currentTimerIndex];
-    } else {
-        NSLog(@"no timers are current");
-        return self.privateTimers[0];
-    }
-    
-}
+//- (GOTimer *)currentTimer {
+//    NSUInteger currentTimerIndex = [self.privateTimers indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+//        if ([(GOTimer*)obj countdownRemaining] > 0 || [(GOTimer*)obj currentRepeat] > 0) {
+//            *stop = YES;
+//            return idx;
+//        }
+//        return 0;
+//    }];
+//    if (currentTimerIndex != NSNotFound){
+//        NSLog(@"timerIndex:%lu", (unsigned long)currentTimerIndex);
+//        return self.privateTimers[currentTimerIndex];
+//    } else {
+//        NSLog(@"no timers are current");
+//        return self.privateTimers[0];
+//    }
+//    
+//}
 
 - (NSString *)timerArchivePath
 {

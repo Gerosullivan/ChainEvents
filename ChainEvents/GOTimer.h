@@ -14,7 +14,5 @@
 @property (nonatomic) NSTimeInterval timerDuration;
 @property (nonatomic) NSInteger timerRepeat;
 @property (nonatomic) NSArray *timerRepeatOptions;
-@property (nonatomic) NSInteger countdownRemaining;
-@property (nonatomic) NSInteger currentRepeat;
 
 @end

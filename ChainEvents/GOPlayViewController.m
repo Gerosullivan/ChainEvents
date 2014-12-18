@@ -10,6 +10,7 @@
 #import "CircleLineButton.h"
 #import "GOTimerStore.h"
 #import "GOTimer.h"
+#import "GOTimersState.h"
 
 @interface GOPlayViewController ()
 
@@ -18,6 +19,7 @@
 @property (nonatomic, weak) NSTimer *repeatingTimer;
 @property (nonatomic) NSDate *startDate;
 @property (nonatomic) BOOL isPaused;
+@property (nonatomic) NSTimeInterval countdownRemaining;
 @property (nonatomic) NSTimeInterval countdownFrom;
 @property (nonatomic) NSTimeInterval totalTimeRunning;
 
@@ -51,21 +53,37 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.tableView.sectionHeaderHeight = 1.0;
-    if ([[[GOTimerStore sharedStore] allTimers] count] > 0) {
-        self.currentTimerObject = [[GOTimerStore sharedStore] currentTimer];
-        
-        [self resetTimer];
-        [self makeTimerName];
-    }
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    if ([[GOTimersState currentState] currentTimer] == nil) {
+        GOTimer *firstTimer = [[GOTimerStore sharedStore] allTimers][0];
+        [[GOTimersState currentState] newTimer:firstTimer];
+        self.currentTimerObject = firstTimer;
+        
+        [self resetTimer];
+        [self makeTimerName];
+    } else {
+        if ([GOTimersState currentState].isActive == NO) {
+            [self resetTimer];
+            [self makeTimerName];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [GOTimersState currentState].countdownRemaining = self.countdownRemaining;
+    
 }
 
 # pragma mark - Timer Methods
@@ -74,12 +92,12 @@
     NSDate *currentDate = [NSDate date];
     NSTimeInterval timeInterval = [currentDate timeIntervalSinceDate:self.startDate];
     
-    self.currentTimerObject.countdownRemaining = self.countdownFrom - timeInterval;
+    self.countdownRemaining = self.countdownFrom - timeInterval;
     
     
     self.timerLabel.text = [self makeTimerString];
     
-    if (self.currentTimerObject.countdownRemaining <= 0) {
+    if (self.countdownRemaining <= 0) {
         [self timerFinished];
     }
 }
@@ -103,8 +121,10 @@
     
     self.countdownFrom = self.currentTimerObject.timerDuration;
     
-    self.currentTimerObject.countdownRemaining = self.currentTimerObject.timerDuration;
+    self.countdownRemaining = self.currentTimerObject.timerDuration;
     self.timerLabel.text = [self makeTimerString];
+    
+    [GOTimersState currentState].isActive = NO;
 }
 
 - (void)pauseTimer {
@@ -117,7 +137,7 @@
         [self stopTimer];
         [self.pauseButton setTitle:@"Resume" forState:UIControlStateNormal];
         self.isPaused = YES;
-        self.countdownFrom = self.currentTimerObject.countdownRemaining;
+        self.countdownFrom = self.countdownRemaining;
     }
 }
 
@@ -129,6 +149,7 @@
     self.pauseButton.alpha = 1;
     self.isPaused = NO;
     
+    // Kill any repeating scheduled timers
     if (self.repeatingTimer) {
         [self.repeatingTimer invalidate];
         self.repeatingTimer = nil;
@@ -141,11 +162,13 @@
                                                    selector:@selector(updateTimer)
                                                    userInfo:nil
                                                     repeats:YES];
+    
+    [GOTimersState currentState].isActive = YES;
 
     // Create Local Notification alerm to go off when timer finishes
     UILocalNotification *alarm = [[UILocalNotification alloc] init];
     alarm.alertBody = @"Timer finished";
-    NSDate *fireDate = [NSDate dateWithTimeInterval:self.currentTimerObject.countdownRemaining sinceDate:self.startDate];
+    NSDate *fireDate = [NSDate dateWithTimeInterval:self.countdownRemaining sinceDate:self.startDate];
     alarm.fireDate = fireDate;
     alarm.soundName = @"alarm_beep.caf";
     
@@ -153,7 +176,7 @@
 }
 
 - (NSString *)makeTimerString {
-    NSInteger ti = (NSInteger)self.currentTimerObject.countdownRemaining;
+    NSInteger ti = (NSInteger)self.countdownRemaining;
     NSInteger seconds = ti % 60;
     NSInteger minutes = (ti / 60) % 60;
     NSInteger hours = (ti / 3600);
@@ -162,18 +185,19 @@
 }
 
 - (void)makeTimerName {
-    NSMutableString *labelText = [NSMutableString stringWithString:self.currentTimerObject.timerName];
-    
     NSString *prefix;
-    NSInteger index = [[[GOTimerStore sharedStore] allTimers] indexOfObjectIdenticalTo:self.currentTimerObject] +1;
+    NSInteger index = [[GOTimersState currentState] currentTimerIndex] +1;
     if (self.currentTimerObject.timerRepeat > 0) {
-        prefix = [NSString stringWithFormat:@"%ld.%ld ", (long)index, self.currentTimerObject.timerRepeat];
+        prefix = [NSString stringWithFormat:@"%ld.%ld ", (long)index, (long)self.currentTimerObject.timerRepeat +1];
     } else {
         prefix = [NSString stringWithFormat:@"%ld ", (long)index];
     }
-    [labelText insertString:prefix atIndex:0];
+    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:prefix];
+    [attString addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(0, [prefix length])];
+    NSAttributedString *name = [[NSAttributedString alloc] initWithString:self.currentTimerObject.timerName];
+    [attString appendAttributedString:name];
     
-    self.timerName.text = labelText;
+    self.timerName.attributedText = attString;
 }
 
 - (void)timerFinished {
@@ -184,6 +208,7 @@
     [self.alertView show];
     
     [self stopTimer];
+    [GOTimersState currentState].isActive = NO;
     
     NSString *soundFilePath =
     [[NSBundle mainBundle] pathForResource: @"alarm_beep"
@@ -327,7 +352,7 @@
 -(IBAction)playTouched:(id)sender {
     if ([self.playButton.titleLabel.text isEqual: @"Start"]) {
         NSLog(@"Start touched");
-        [self resetTimer];
+//        [self resetTimer];
         [self startTimer];
     } else {
         NSLog(@"Reset touched");

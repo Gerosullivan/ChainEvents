@@ -136,7 +136,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QYM-09-Thl">
-                                                    <rect key="frame" x="495" y="8" width="97" height="38"/>
+                                                    <rect key="frame" x="487" y="8" width="97" height="38"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="38" id="jV8-gc-jbY"/>
                                                         <constraint firstAttribute="width" constant="97" id="w72-zr-Xye"/>
@@ -146,7 +146,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:35.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDw-yP-BFD">
-                                                    <rect key="frame" x="295" y="46" width="297" height="71"/>
+                                                    <rect key="frame" x="287" y="46" width="297" height="71"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="71" id="azE-U3-Kvn"/>
                                                         <constraint firstAttribute="width" constant="297" id="qM2-m9-tOt"/>
@@ -155,24 +155,31 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Proin Facilisis" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7a-nI-hvR">
-                                                    <rect key="frame" x="268" y="117" width="324" height="38"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7a-nI-hvR">
+                                                    <rect key="frame" x="260" y="117" width="324" height="38"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="324" id="Uda-X8-GIH"/>
                                                         <constraint firstAttribute="height" constant="38" id="yj0-f8-aLK"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="27"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="1 Proin Facilisis">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="27" name="HelveticaNeue-Light"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="QYM-09-Thl" secondAttribute="trailing" id="6Rk-TE-5V7"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="QYM-09-Thl" secondAttribute="trailing" constant="8" id="6Rk-TE-5V7"/>
                                                 <constraint firstItem="QYM-09-Thl" firstAttribute="top" secondItem="Ocq-S6-3q1" secondAttribute="topMargin" id="Zs7-vi-8c3"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="wDw-yP-BFD" secondAttribute="trailing" id="jSr-hj-hwo"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="wDw-yP-BFD" secondAttribute="trailing" constant="8" id="jSr-hj-hwo"/>
                                                 <constraint firstItem="c7a-nI-hvR" firstAttribute="top" secondItem="wDw-yP-BFD" secondAttribute="bottom" id="odw-Tl-FO3"/>
                                                 <constraint firstItem="wDw-yP-BFD" firstAttribute="top" secondItem="QYM-09-Thl" secondAttribute="bottom" id="ro3-AN-1BK"/>
-                                                <constraint firstItem="c7a-nI-hvR" firstAttribute="trailing" secondItem="Ocq-S6-3q1" secondAttribute="trailingMargin" id="vz4-JZ-wA1"/>
+                                                <constraint firstItem="c7a-nI-hvR" firstAttribute="trailing" secondItem="Ocq-S6-3q1" secondAttribute="trailingMargin" constant="-8" id="vz4-JZ-wA1"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
