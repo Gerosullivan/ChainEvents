@@ -19,7 +19,6 @@
 @property (nonatomic) NSDate *startDate;
 @property (nonatomic) BOOL isPaused;
 @property (nonatomic) NSTimeInterval countdownFrom;
-@property (nonatomic) NSTimeInterval currentInterval;
 @property (nonatomic) NSTimeInterval totalTimeRunning;
 
 // Timer Labels
@@ -52,18 +51,16 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.tableView.sectionHeaderHeight = 1.0;
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-
     if ([[[GOTimerStore sharedStore] allTimers] count] > 0) {
-        self.currentTimerObject = [[GOTimerStore sharedStore] allTimers][0];
+        self.currentTimerObject = [[GOTimerStore sharedStore] currentTimer];
         
         [self resetTimer];
         [self makeTimerName];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,17 +74,19 @@
     NSDate *currentDate = [NSDate date];
     NSTimeInterval timeInterval = [currentDate timeIntervalSinceDate:self.startDate];
     
-    self.currentInterval = self.countdownFrom - timeInterval;
+    self.currentTimerObject.countdownRemaining = self.countdownFrom - timeInterval;
+    
     
     self.timerLabel.text = [self makeTimerString];
     
-    if (self.currentInterval <= 0) {
+    if (self.currentTimerObject.countdownRemaining <= 0) {
         [self timerFinished];
     }
 }
 
 - (void)stopTimer {
     NSLog(@"Stop timer");
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
     [self.repeatingTimer invalidate];
     self.repeatingTimer = nil;
 }
@@ -104,7 +103,7 @@
     
     self.countdownFrom = self.currentTimerObject.timerDuration;
     
-    self.currentInterval = self.currentTimerObject.timerDuration;
+    self.currentTimerObject.countdownRemaining = self.currentTimerObject.timerDuration;
     self.timerLabel.text = [self makeTimerString];
 }
 
@@ -118,7 +117,7 @@
         [self stopTimer];
         [self.pauseButton setTitle:@"Resume" forState:UIControlStateNormal];
         self.isPaused = YES;
-        self.countdownFrom = self.currentInterval;
+        self.countdownFrom = self.currentTimerObject.countdownRemaining;
     }
 }
 
@@ -146,7 +145,7 @@
     // Create Local Notification alerm to go off when timer finishes
     UILocalNotification *alarm = [[UILocalNotification alloc] init];
     alarm.alertBody = @"Timer finished";
-    NSDate *fireDate = [NSDate dateWithTimeInterval:self.currentInterval sinceDate:self.startDate];
+    NSDate *fireDate = [NSDate dateWithTimeInterval:self.currentTimerObject.countdownRemaining sinceDate:self.startDate];
     alarm.fireDate = fireDate;
     alarm.soundName = @"alarm_beep.caf";
     
@@ -154,7 +153,7 @@
 }
 
 - (NSString *)makeTimerString {
-    NSInteger ti = (NSInteger)self.currentInterval;
+    NSInteger ti = (NSInteger)self.currentTimerObject.countdownRemaining;
     NSInteger seconds = ti % 60;
     NSInteger minutes = (ti / 60) % 60;
     NSInteger hours = (ti / 3600);

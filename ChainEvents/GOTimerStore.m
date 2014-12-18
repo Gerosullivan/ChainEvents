@@ -47,7 +47,7 @@
             _privateTimers = [[NSMutableArray alloc] init];
         }
     }
-        
+    
     return self;
 }
 
@@ -77,6 +77,24 @@
     
     [self.privateTimers removeObjectAtIndex:fromIndex];
     [self.privateTimers insertObject:timer atIndex:toIndex];
+}
+
+- (GOTimer *)currentTimer {
+    NSUInteger currentTimerIndex = [self.privateTimers indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        if ([(GOTimer*)obj countdownRemaining] > 0 || [(GOTimer*)obj currentRepeat] > 0) {
+            *stop = YES;
+            return idx;
+        }
+        return 0;
+    }];
+    if (currentTimerIndex != NSNotFound){
+        NSLog(@"timerIndex:%lu", (unsigned long)currentTimerIndex);
+        return self.privateTimers[currentTimerIndex];
+    } else {
+        NSLog(@"no timers are current");
+        return self.privateTimers[0];
+    }
+    
 }
 
 - (NSString *)timerArchivePath
