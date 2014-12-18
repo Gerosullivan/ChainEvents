@@ -8,12 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GOTimer : NSObject
+@interface GOTimer : NSObject <NSCoding>
 
 @property (nonatomic, copy) NSString *timerName;
 @property (nonatomic) NSTimeInterval timerDuration;
 @property (nonatomic) NSInteger timerRepeat;
 @property (nonatomic) NSArray *timerRepeatOptions;
-@property (nonatomic) NSTimeInterval currentTimeLeft;
 
 @end

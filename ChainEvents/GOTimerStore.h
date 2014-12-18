@@ -19,4 +19,6 @@
 - (void)removeTimer:(GOTimer *)timer;
 - (void)moveTimerAtIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex;
 
+- (BOOL)saveChanges;
+
 @end

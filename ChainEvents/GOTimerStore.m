@@ -39,9 +39,15 @@
     self = [super init];
     
     if (self) {
-        _privateTimers = [[NSMutableArray alloc] init];
+        NSString *path = [self timerArchivePath];
+        _privateTimers = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        
+        // If the array hadn't been saved previously, create a new empty one
+        if (!_privateTimers) {
+            _privateTimers = [[NSMutableArray alloc] init];
+        }
     }
-    
+        
     return self;
 }
 
@@ -73,9 +79,24 @@
     [self.privateTimers insertObject:timer atIndex:toIndex];
 }
 
+- (NSString *)timerArchivePath
+{
+    // Make sure that the first argument is NSDocumentDirectory
+    // and not NSDocumentationDirectory
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    // Get the one document directory from that list
+    NSString *documentDirectory = [documentDirectories firstObject];
+    
+    return [documentDirectory stringByAppendingPathComponent:@"timers.archive"];
+}
 
-
-
+- (BOOL)saveChanges {
+    NSString *path = [self timerArchivePath];
+    
+    // Returns YES on success
+    return [NSKeyedArchiver archiveRootObject:self.privateTimers toFile:path];
+}
 
 
 

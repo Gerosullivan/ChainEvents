@@ -20,6 +20,7 @@
 @property (nonatomic) BOOL isPaused;
 @property (nonatomic) NSTimeInterval countdownFrom;
 @property (nonatomic) NSTimeInterval currentInterval;
+@property (nonatomic) NSTimeInterval totalTimeRunning;
 
 // Timer Labels
 @property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel;
@@ -31,6 +32,7 @@
 @property (nonatomic) CircleLineButton *pauseButton;
 @property (nonatomic) UILabel *statusLabel;
 
+// Alert elements
 @property (nonatomic) UIAlertView *alertView;
 @property (nonatomic, retain) AVAudioPlayer *soundPlayer;
 
@@ -60,7 +62,7 @@
         self.currentTimerObject = [[GOTimerStore sharedStore] allTimers][0];
         
         [self resetTimer];
-        [self renderTimerName];
+        [self makeTimerName];
     }
 }
 
@@ -80,26 +82,7 @@
     self.timerLabel.text = [self makeTimerString];
     
     if (self.currentInterval <= 0) {
-        self.alertView = nil;
-        self.alertView = [[UIAlertView alloc] initWithTitle:@"Timer Finished" message:@"Next Timer ready" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [self.alertView show];
-        NSLog(@"Timer Finised");
-        [self stopTimer];
-        
-        NSString *soundFilePath =
-        [[NSBundle mainBundle] pathForResource: @"alarm_beep"
-                                        ofType: @"caf"];
-        
-        NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: soundFilePath];
-        
-        AVAudioPlayer *newPlayer =
-        [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL
-                                               error: nil];
-        
-        self.soundPlayer = newPlayer;
-        
-        [soundPlayer prepareToPlay];
-        [soundPlayer setDelegate: self];
+        [self timerFinished];
     }
 }
 
@@ -179,7 +162,7 @@
     return [NSString stringWithFormat:@"%02ld:%02ld.%02ld", (long)hours, (long)minutes, (long)seconds];
 }
 
-- (void)renderTimerName {
+- (void)makeTimerName {
     NSMutableString *labelText = [NSMutableString stringWithString:self.currentTimerObject.timerName];
     
     NSString *prefix;
@@ -192,6 +175,31 @@
     [labelText insertString:prefix atIndex:0];
     
     self.timerName.text = labelText;
+}
+
+- (void)timerFinished {
+    NSLog(@"Timer Finised");
+    
+    self.alertView = nil;
+    self.alertView = [[UIAlertView alloc] initWithTitle:@"Timer Finished" message:@"Next Timer ready" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [self.alertView show];
+    
+    [self stopTimer];
+    
+    NSString *soundFilePath =
+    [[NSBundle mainBundle] pathForResource: @"alarm_beep"
+                                    ofType: @"caf"];
+    
+    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: soundFilePath];
+    
+    AVAudioPlayer *newPlayer =
+    [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL
+                                           error: nil];
+    
+    self.soundPlayer = newPlayer;
+    
+    [soundPlayer prepareToPlay];
+    [soundPlayer setDelegate: self];
 }
 
 # pragma mark - Table Methods
