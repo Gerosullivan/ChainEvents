@@ -15,11 +15,13 @@
 @interface GOPlayViewController ()
 
 // Timer properties
+@property (nonatomic) GOTimer *thisTimer;
 @property (nonatomic, weak) NSTimer *repeatingTimer;
 @property (nonatomic) NSDate *startDate;
 @property (nonatomic) BOOL isPaused;
 @property (nonatomic) NSTimeInterval countdownFrom;
 @property (nonatomic) NSTimeInterval totalTimeRunning;
+@property (nonatomic) NSMutableArray *allTimers;
 
 // Timer Labels
 @property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel;
@@ -58,18 +60,21 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    // Check to see if this is a new init list
-    if ([[GOTimersState currentState] currentTimer] == nil) {
-        GOTimer *firstTimer = [[GOTimerStore sharedStore] allTimers][0];
-        [[GOTimersState currentState] newTimer:firstTimer];
+    
+    // Check to see if this is a new init
+    if (self.allTimers == nil) {
+        [GOTimersState currentState].currentTimerIndex = 0;
     }
+    
+    [self populateTimersList];
     
     // Reload the timer if timer not running,
     // as it could have been modified since first loaded
     if ([GOTimersState currentState].isActive == NO) {
         [self resetTimer];
-        [self makeTimerName];
+        [self makeTimerNames];
     }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -108,10 +113,11 @@
     self.pauseButton.alpha = 0.5;
     [self.pauseButton setEnabled:NO];
     
+    NSInteger currentTimerIndex = [GOTimersState currentState].currentTimerIndex;
+    self.thisTimer = self.allTimers[currentTimerIndex][0];
+    self.countdownFrom = self.thisTimer.timerDuration;
     
-    self.countdownFrom = [GOTimersState currentState].currentTimer.timerDuration;
-    
-    [GOTimersState currentState].countdownRemaining = [GOTimersState currentState].currentTimer.timerDuration;
+    [GOTimersState currentState].countdownRemaining = self.thisTimer.timerDuration;
     self.timerLabel.text = [self makeTimerString];
     
     [GOTimersState currentState].isActive = NO;
@@ -174,32 +180,57 @@
     return [NSString stringWithFormat:@"%02ld:%02ld.%02ld", (long)hours, (long)minutes, (long)seconds];
 }
 
-- (void)makeTimerName {
-    // Set the title of the navigation bar
-    NSUInteger numberOfTimers = [[[GOTimerStore sharedStore] allTimers] count];
-    NSUInteger currentTimerNumber =[GOTimersState currentState].currentTimerIndex +1;
+- (void)makeTimerNames {
+    // Get the total number of timers, including repeats
+    NSInteger totalTimers = [self.allTimers count];
+    // ****  Set the title of the navigation bar **** //
+    NSInteger currentTimerNumber =[GOTimersState currentState].currentTimerIndex +1;
     
-    self.navigationItem.title = [NSString stringWithFormat:@"Timer %ld of %ld", currentTimerNumber, numberOfTimers];
+    self.navigationItem.title = [NSString stringWithFormat:@"Timer %ld of %ld", currentTimerNumber, totalTimers];
     
-    // Set the text of the timer name label (under the countdown)
-    NSString *prefix;
-    NSInteger index = [[GOTimersState currentState] currentTimerIndex] +1;
-    if ([GOTimersState currentState].currentTimer.timerRepeat > 0) {
-        prefix = [NSString stringWithFormat:@"%ld.%ld ", (long)index, (long)[GOTimersState currentState].currentTimer.timerRepeat +1];
-    } else {
-        prefix = [NSString stringWithFormat:@"%ld ", (long)index];
-    }
+    // ****  Set the text of the timer name label (under the countdown) **** //
+    // Create the prefix timer order and repeat number
+    NSInteger currentTimerIndex =[GOTimersState currentState].currentTimerIndex;
+    NSString *prefix = self.allTimers[currentTimerIndex][1];
+    
+    // Render the prefix in lighter color
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:prefix];
     [attString addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(0, [prefix length])];
-    NSAttributedString *name = [[NSAttributedString alloc] initWithString:[GOTimersState currentState].currentTimer.timerName];
+    NSAttributedString *name = [[NSAttributedString alloc] initWithString:self.thisTimer.timerName];
     [attString appendAttributedString:name];
     
     self.timerName.attributedText = attString;
     
-    // Set the Next Timer label
-    NSUInteger nextTimerIndex = [GOTimersState currentState].currentTimerIndex +1;
-    GOTimer *nextTimer = [[GOTimerStore sharedStore] allTimers][nextTimerIndex];
-    self.NextDetailLabel.text = nextTimer.timerName;
+    // ****  Set the Next Timer label **** //
+    NSInteger nextTimerIndex = [GOTimersState currentState].currentTimerIndex +1;
+    GOTimer *nextTimer = self.allTimers[nextTimerIndex][0];
+    NSString *nextTimerName = nextTimer.timerName;
+    NSString *nextTimerPrefix = self.allTimers[nextTimerIndex][1];
+    self.NextDetailLabel.text = [NSString stringWithFormat:@"%@%@", nextTimerPrefix, nextTimerName];
+}
+
+- (void)populateTimersList {
+    self.allTimers = [[NSMutableArray alloc] init];
+    
+    for (int x = 0 ; x < [[[GOTimerStore sharedStore] allTimers] count]; x++) {
+        NSArray *timerDetails = [[NSArray alloc] init];
+        GOTimer *thisTimer = [[GOTimerStore sharedStore] allTimers][x];
+        NSString *fullPrefix;
+        NSInteger timerNumber = x + 1;
+        
+        for (int y = 0; y <= thisTimer.timerRepeat; y++) {
+            if (thisTimer.timerRepeat > 0) {
+                fullPrefix = [NSString stringWithFormat:@"%ld.%ld ",
+                              (long)timerNumber,
+                              (long)y + 1];
+            } else {
+                fullPrefix = [NSString stringWithFormat:@"%ld ", (long)timerNumber];
+            }
+            timerDetails = @[thisTimer, fullPrefix];
+            [self.allTimers addObject:timerDetails];
+        }
+    }
+    NSLog(@"timersList: %@", self.allTimers);
 }
 
 - (void)timerFinished {
@@ -227,6 +258,7 @@
     [soundPlayer prepareToPlay];
     [soundPlayer setDelegate: self];
 }
+
 
 # pragma mark - Table Methods
 

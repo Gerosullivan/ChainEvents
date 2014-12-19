@@ -13,12 +13,8 @@
 
 + (instancetype)currentState;
 
-@property (nonatomic) GOTimer *currentTimer;
-@property (nonatomic) NSUInteger currentTimerIndex;
+@property (nonatomic) NSInteger currentTimerIndex;
 @property (nonatomic) BOOL isActive;
-@property (nonatomic) NSInteger currentRepeat;
 @property (nonatomic) NSInteger countdownRemaining;
-
-- (void)newTimer:(GOTimer *)timerObject;
 
 @end

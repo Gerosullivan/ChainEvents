@@ -34,22 +34,12 @@
     self = [super init];
     
     if (self) {
-        _currentTimer = nil;
         _currentTimerIndex = 0;
         _isActive = NO;
-        _currentRepeat = 0;
         _countdownRemaining = 0;
     }
     
     return self;
-}
-
-- (void)newTimer:(GOTimer *)timerObject {
-    self.currentTimer = timerObject;
-    self.currentTimerIndex = [[[GOTimerStore sharedStore] allTimers] indexOfObjectIdenticalTo:timerObject];
-    self.isActive = NO;
-    self.currentRepeat = 0;
-    self.countdownRemaining = 0;
 }
 
 
