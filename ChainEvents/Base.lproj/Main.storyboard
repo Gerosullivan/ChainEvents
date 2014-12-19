@@ -218,6 +218,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" id="vl3-wu-kms"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="NextDetailLabel" destination="edK-e4-u0C" id="Yd0-kP-CkJ"/>
                         <outlet property="timerLabel" destination="wDw-yP-BFD" id="RAa-52-rng"/>
                         <outlet property="timerName" destination="c7a-nI-hvR" id="qjc-R4-Nrp"/>
                         <outlet property="totalTimeLabel" destination="QYM-09-Thl" id="Krw-nD-YFK"/>

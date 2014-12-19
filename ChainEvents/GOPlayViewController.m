@@ -15,11 +15,9 @@
 @interface GOPlayViewController ()
 
 // Timer properties
-@property (nonatomic) GOTimer *currentTimerObject;
 @property (nonatomic, weak) NSTimer *repeatingTimer;
 @property (nonatomic) NSDate *startDate;
 @property (nonatomic) BOOL isPaused;
-@property (nonatomic) NSTimeInterval countdownRemaining;
 @property (nonatomic) NSTimeInterval countdownFrom;
 @property (nonatomic) NSTimeInterval totalTimeRunning;
 
@@ -27,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timerName;
+@property (weak, nonatomic) IBOutlet UILabel *NextDetailLabel;
 
 // Table footer elements
 @property (nonatomic) CircleLineButton *playButton;
@@ -59,37 +58,23 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    // Check to see if this is a new init list
     if ([[GOTimersState currentState] currentTimer] == nil) {
         GOTimer *firstTimer = [[GOTimerStore sharedStore] allTimers][0];
         [[GOTimersState currentState] newTimer:firstTimer];
-        self.currentTimerObject = firstTimer;
-        
-        [self resetTimer];
-        [self makeTimerName];
-    } else {
-        if ([GOTimersState currentState].isActive == NO) {
-            [self resetTimer];
-            [self makeTimerName];
-        }
     }
     
-    NSUInteger numberOfTimers = [[[GOTimerStore sharedStore] allTimers] count];
-    NSUInteger currentTimerNumber =[GOTimersState currentState].currentTimerIndex +1;
-    
-    self.navigationItem.title = [NSString stringWithFormat:@"Timer %ld of %ld", currentTimerNumber, numberOfTimers];
-    
+    // Reload the timer if timer not running,
+    // as it could have been modified since first loaded
+    if ([GOTimersState currentState].isActive == NO) {
+        [self resetTimer];
+        [self makeTimerName];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [GOTimersState currentState].countdownRemaining = self.countdownRemaining;
-    
 }
 
 # pragma mark - Timer Methods
@@ -98,12 +83,11 @@
     NSDate *currentDate = [NSDate date];
     NSTimeInterval timeInterval = [currentDate timeIntervalSinceDate:self.startDate];
     
-    self.countdownRemaining = self.countdownFrom - timeInterval;
-    
+    [GOTimersState currentState].countdownRemaining = self.countdownFrom - timeInterval;
     
     self.timerLabel.text = [self makeTimerString];
     
-    if (self.countdownRemaining <= 0) {
+    if ([GOTimersState currentState].countdownRemaining <= 0) {
         [self timerFinished];
     }
 }
@@ -125,9 +109,9 @@
     [self.pauseButton setEnabled:NO];
     
     
-    self.countdownFrom = self.currentTimerObject.timerDuration;
+    self.countdownFrom = [GOTimersState currentState].currentTimer.timerDuration;
     
-    self.countdownRemaining = self.currentTimerObject.timerDuration;
+    [GOTimersState currentState].countdownRemaining = [GOTimersState currentState].currentTimer.timerDuration;
     self.timerLabel.text = [self makeTimerString];
     
     [GOTimersState currentState].isActive = NO;
@@ -143,7 +127,7 @@
         [self stopTimer];
         [self.pauseButton setTitle:@"Resume" forState:UIControlStateNormal];
         self.isPaused = YES;
-        self.countdownFrom = self.countdownRemaining;
+        self.countdownFrom = [GOTimersState currentState].countdownRemaining;
     }
 }
 
@@ -174,7 +158,7 @@
     // Create Local Notification alerm to go off when timer finishes
     UILocalNotification *alarm = [[UILocalNotification alloc] init];
     alarm.alertBody = @"Timer finished";
-    NSDate *fireDate = [NSDate dateWithTimeInterval:self.countdownRemaining sinceDate:self.startDate];
+    NSDate *fireDate = [NSDate dateWithTimeInterval:[GOTimersState currentState].countdownRemaining sinceDate:self.startDate];
     alarm.fireDate = fireDate;
     alarm.soundName = @"alarm_beep.caf";
     
@@ -182,7 +166,7 @@
 }
 
 - (NSString *)makeTimerString {
-    NSInteger ti = (NSInteger)self.countdownRemaining;
+    NSInteger ti = (NSInteger)[GOTimersState currentState].countdownRemaining;
     NSInteger seconds = ti % 60;
     NSInteger minutes = (ti / 60) % 60;
     NSInteger hours = (ti / 3600);
@@ -191,22 +175,31 @@
 }
 
 - (void)makeTimerName {
+    // Set the title of the navigation bar
+    NSUInteger numberOfTimers = [[[GOTimerStore sharedStore] allTimers] count];
+    NSUInteger currentTimerNumber =[GOTimersState currentState].currentTimerIndex +1;
+    
+    self.navigationItem.title = [NSString stringWithFormat:@"Timer %ld of %ld", currentTimerNumber, numberOfTimers];
+    
+    // Set the text of the timer name label (under the countdown)
     NSString *prefix;
     NSInteger index = [[GOTimersState currentState] currentTimerIndex] +1;
-    if (self.currentTimerObject.timerRepeat > 0) {
-        prefix = [NSString stringWithFormat:@"%ld.%ld ", (long)index, (long)self.currentTimerObject.timerRepeat +1];
+    if ([GOTimersState currentState].currentTimer.timerRepeat > 0) {
+        prefix = [NSString stringWithFormat:@"%ld.%ld ", (long)index, (long)[GOTimersState currentState].currentTimer.timerRepeat +1];
     } else {
         prefix = [NSString stringWithFormat:@"%ld ", (long)index];
     }
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:prefix];
     [attString addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(0, [prefix length])];
-    NSAttributedString *name = [[NSAttributedString alloc] initWithString:self.currentTimerObject.timerName];
+    NSAttributedString *name = [[NSAttributedString alloc] initWithString:[GOTimersState currentState].currentTimer.timerName];
     [attString appendAttributedString:name];
     
     self.timerName.attributedText = attString;
     
-    // Make the Next Timer label while we are at it
-    
+    // Set the Next Timer label
+    NSUInteger nextTimerIndex = [GOTimersState currentState].currentTimerIndex +1;
+    GOTimer *nextTimer = [[GOTimerStore sharedStore] allTimers][nextTimerIndex];
+    self.NextDetailLabel.text = nextTimer.timerName;
 }
 
 - (void)timerFinished {

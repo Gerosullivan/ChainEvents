@@ -59,10 +59,10 @@
 		7ADA4D041A37B46F0088B3D9 /* GORepeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GORepeatViewController.m; sourceTree = "<group>"; };
 		C22F430C1A43849D0078A651 /* GOTimersState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOTimersState.h; sourceTree = "<group>"; };
 		C22F430D1A43849D0078A651 /* GOTimersState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOTimersState.m; sourceTree = "<group>"; };
-		C2378B9E1A4228B40068CEDB /* alarm_beep.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = alarm_beep.caf; sourceTree = "<group>"; };
+		C2378B9E1A4228B40068CEDB /* alarm_beep.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = alarm_beep.caf; path = ../alarm_beep.caf; sourceTree = "<group>"; };
 		C275654A1A3F7E290094116E /* CircleLineButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleLineButton.h; sourceTree = "<group>"; };
 		C275654B1A3F7E290094116E /* CircleLineButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleLineButton.m; sourceTree = "<group>"; };
-		C275654E1A42264D0094116E /* alarm.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = alarm.caf; sourceTree = "<group>"; };
+		C275654E1A42264D0094116E /* alarm.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = alarm.caf; path = ../alarm.caf; sourceTree = "<group>"; };
 		C28F1D931A3CC82A00531EE3 /* GOPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOPlayViewController.h; sourceTree = "<group>"; };
 		C28F1D941A3CC82A00531EE3 /* GOPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOPlayViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,8 +88,6 @@
 		7A9DE9561A1FA70900D10C37 = {
 			isa = PBXGroup;
 			children = (
-				C2378B9E1A4228B40068CEDB /* alarm_beep.caf */,
-				C275654E1A42264D0094116E /* alarm.caf */,
 				7A9DE9611A1FA70900D10C37 /* ChainEvents */,
 				7A9DE97E1A1FA70900D10C37 /* ChainEventsTests */,
 				7A9DE9601A1FA70900D10C37 /* Products */,
@@ -108,27 +106,12 @@
 		7A9DE9611A1FA70900D10C37 /* ChainEvents */ = {
 			isa = PBXGroup;
 			children = (
-				C22F430C1A43849D0078A651 /* GOTimersState.h */,
-				C22F430D1A43849D0078A651 /* GOTimersState.m */,
-				C28F1D931A3CC82A00531EE3 /* GOPlayViewController.h */,
-				C28F1D941A3CC82A00531EE3 /* GOPlayViewController.m */,
-				C275654A1A3F7E290094116E /* CircleLineButton.h */,
-				C275654B1A3F7E290094116E /* CircleLineButton.m */,
-				7ADA4D031A37B46F0088B3D9 /* GORepeatViewController.h */,
-				7ADA4D041A37B46F0088B3D9 /* GORepeatViewController.m */,
-				7A6599631A379ED200212583 /* GODetailViewController.h */,
-				7A6599641A379ED200212583 /* GODetailViewController.m */,
-				7A715FA31A2E1BF4008874EC /* GOTimersViewController.h */,
-				7A715FA41A2E1BF4008874EC /* GOTimersViewController.m */,
-				7A715FA61A2E1D75008874EC /* GOTimerStore.h */,
-				7A715FA71A2E1D75008874EC /* GOTimerStore.m */,
-				7A715FA91A2E2085008874EC /* GOTimer.h */,
-				7A715FAA1A2E2085008874EC /* GOTimer.m */,
+				C22F430F1A447C230078A651 /* Model */,
+				C22F43111A447C790078A651 /* View */,
+				C22F43101A447C630078A651 /* Controller */,
 				7A9DE9661A1FA70900D10C37 /* AppDelegate.h */,
 				7A9DE9671A1FA70900D10C37 /* AppDelegate.m */,
-				7A9DE96F1A1FA70900D10C37 /* Main.storyboard */,
 				7A9DE9721A1FA70900D10C37 /* Images.xcassets */,
-				7A9DE9741A1FA70900D10C37 /* LaunchScreen.xib */,
 				7A9DE9621A1FA70900D10C37 /* Supporting Files */,
 			);
 			path = ChainEvents;
@@ -137,6 +120,8 @@
 		7A9DE9621A1FA70900D10C37 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C2378B9E1A4228B40068CEDB /* alarm_beep.caf */,
+				C275654E1A42264D0094116E /* alarm.caf */,
 				7A9DE9631A1FA70900D10C37 /* Info.plist */,
 				7A9DE9641A1FA70900D10C37 /* main.m */,
 			);
@@ -158,6 +143,45 @@
 				7A9DE9801A1FA70900D10C37 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C22F430F1A447C230078A651 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C22F430C1A43849D0078A651 /* GOTimersState.h */,
+				C22F430D1A43849D0078A651 /* GOTimersState.m */,
+				7A715FA61A2E1D75008874EC /* GOTimerStore.h */,
+				7A715FA71A2E1D75008874EC /* GOTimerStore.m */,
+				7A715FA91A2E2085008874EC /* GOTimer.h */,
+				7A715FAA1A2E2085008874EC /* GOTimer.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		C22F43101A447C630078A651 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C28F1D931A3CC82A00531EE3 /* GOPlayViewController.h */,
+				C28F1D941A3CC82A00531EE3 /* GOPlayViewController.m */,
+				C275654A1A3F7E290094116E /* CircleLineButton.h */,
+				C275654B1A3F7E290094116E /* CircleLineButton.m */,
+				7ADA4D031A37B46F0088B3D9 /* GORepeatViewController.h */,
+				7ADA4D041A37B46F0088B3D9 /* GORepeatViewController.m */,
+				7A6599631A379ED200212583 /* GODetailViewController.h */,
+				7A6599641A379ED200212583 /* GODetailViewController.m */,
+				7A715FA31A2E1BF4008874EC /* GOTimersViewController.h */,
+				7A715FA41A2E1BF4008874EC /* GOTimersViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		C22F43111A447C790078A651 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7A9DE9741A1FA70900D10C37 /* LaunchScreen.xib */,
+				7A9DE96F1A1FA70900D10C37 /* Main.storyboard */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
