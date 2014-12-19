@@ -10,6 +10,7 @@
 #import "GOTimerStore.h"
 #import "GOTimer.h"
 #import "GODetailViewController.h"
+#import "GOTimersState.h"
 
 @implementation GOTimersViewController
 
@@ -37,7 +38,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+#pragma mark - Table delegate
 
 //- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 //    // Return the number of sections.
@@ -52,7 +53,6 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    
     UILabel *orderLabel, *nameLabel, *detailLabel;
     
     orderLabel = (UILabel *)[cell viewWithTag:1];
@@ -80,7 +80,13 @@
     detailLabel = (UILabel *)[cell viewWithTag:3];
     detailLabel.text = TimerDetail;
     
-
+    if ([GOTimersState currentState].isActive == YES && [GOTimersState currentState].currentTimerIndex == indexPath.row) {
+        cell.backgroundColor = [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1];
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.backgroundColor = [UIColor clearColor];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
     
     return cell;
 }
@@ -95,16 +101,25 @@
     if ([nameLabel.text isEqual: @""]) {
         detailLabel.frame = CGRectMake(36, 22, detailLabel.frame.size.width, detailLabel.frame.size.height);
     }
+    
+    
 }
 
-/*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
+    if ([GOTimersState currentState].isActive == YES && [GOTimersState currentState].currentTimerIndex == indexPath.row) {
+        return NO;
+    }
     return YES;
 }
-*/
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([GOTimersState currentState].isActive == YES && [GOTimersState currentState].currentTimerIndex == indexPath.row) {
+        return nil;
+    }
+    return indexPath;
+}
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {

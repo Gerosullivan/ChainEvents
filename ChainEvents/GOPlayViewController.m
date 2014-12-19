@@ -72,6 +72,12 @@
             [self makeTimerName];
         }
     }
+    
+    NSUInteger numberOfTimers = [[[GOTimerStore sharedStore] allTimers] count];
+    NSUInteger currentTimerNumber =[GOTimersState currentState].currentTimerIndex +1;
+    
+    self.navigationItem.title = [NSString stringWithFormat:@"Timer %ld of %ld", currentTimerNumber, numberOfTimers];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -198,6 +204,9 @@
     [attString appendAttributedString:name];
     
     self.timerName.attributedText = attString;
+    
+    // Make the Next Timer label while we are at it
+    
 }
 
 - (void)timerFinished {
@@ -369,6 +378,7 @@
 #pragma mark - Alert View Actions
 - (void)didPresentAlertView:(UIAlertView *)alertView {
     [self.soundPlayer play];
+    self.tabBarController.selectedIndex = 1;
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
