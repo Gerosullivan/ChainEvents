@@ -145,7 +145,7 @@
                                                     <color key="textColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:35.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDw-yP-BFD">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDw-yP-BFD">
                                                     <rect key="frame" x="287" y="46" width="297" height="71"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="71" id="azE-U3-Kvn"/>
@@ -162,7 +162,7 @@
                                                         <constraint firstAttribute="height" constant="38" id="yj0-f8-aLK"/>
                                                     </constraints>
                                                     <attributedString key="attributedText">
-                                                        <fragment content="1 Proin Facilisis">
+                                                        <fragment content="1 Timer">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" size="27" name="HelveticaNeue-Light"/>
@@ -214,9 +214,7 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Item" image="play" id="Dnm-Qk-WqC"/>
-                    <navigationItem key="navigationItem" title="Play" id="fNQ-Ll-mjE">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="vl3-wu-kms"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Play" id="fNQ-Ll-mjE"/>
                     <connections>
                         <outlet property="NextDetailLabel" destination="edK-e4-u0C" id="Yd0-kP-CkJ"/>
                         <outlet property="timerLabel" destination="wDw-yP-BFD" id="RAa-52-rng"/>

@@ -25,11 +25,13 @@
 @property (nonatomic) NSTimeInterval totalTimeRunning;
 @property (nonatomic) NSMutableArray *allTimers;
 
-// Timer Labels
+// Timer Labels & Buttons
 @property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timerName;
 @property (weak, nonatomic) IBOutlet UILabel *NextDetailLabel;
+@property (nonatomic) UIBarButtonItem *previousButton;
+@property (nonatomic) UIBarButtonItem *nextButton;
 
 // Table footer elements
 @property (nonatomic) CircleLineButton *playButton;
@@ -38,6 +40,7 @@
 
 // Alert elements
 @property (nonatomic) UIAlertView *alertView;
+@property (nonatomic) UIAlertView *firstAlertView;
 @property (nonatomic, retain) AVAudioPlayer *soundPlayer;
 
 @end
@@ -52,8 +55,9 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // Next and back navigation buttons.
+    self.previousButton = [[UIBarButtonItem alloc] initWithTitle:@"Previous" style:UIBarButtonItemStylePlain target:self action:@selector(previousTouched:)];
+    self.nextButton = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(nextTouched:)];
     
     self.tableView.sectionHeaderHeight = 1.0;
 
@@ -62,8 +66,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    if ([[[GOTimerStore sharedStore] allTimers] count] == 0) {
+        self.firstAlertView = nil;
+        
+        self.firstAlertView = [[UIAlertView alloc] initWithTitle:@"No Timers!" message:@"Please add timers in the Setup screen." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [self.firstAlertView show];
+        return;
+    }
     
-    // Check to see if this is a new init
+    // Check to see if this is a new initF
     if (self.allTimers == nil) {
         [GOTimersState currentState].currentTimerIndex = 0;
     }
@@ -107,6 +118,7 @@
 }
 
 - (void)resetTimer {
+    NSLog(@"resetTimer");
     [self.playButton changeToPrimaryColor];
     [self.playButton setTitle:@"Start" forState:UIControlStateNormal];
     
@@ -123,6 +135,19 @@
     [self makeTimerString];
     
     [GOTimersState currentState].isActive = NO;
+    
+    if ([GOTimersState currentState].currentTimerIndex +1 < self.allTimers.count){
+        self.navigationItem.rightBarButtonItem = self.nextButton;
+    } else {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+    
+    if ([GOTimersState currentState].currentTimerIndex > 0) {
+        self.navigationItem.leftBarButtonItem = self.previousButton;
+    } else {
+        self.navigationItem.leftBarButtonItem = nil;
+    }
+
 }
 
 - (void)pauseTimer {
@@ -146,6 +171,9 @@
     [self.pauseButton setEnabled:YES];
     self.pauseButton.alpha = 1;
     self.isPaused = NO;
+    
+    self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItem = nil;
     
     // Kill any repeating scheduled timers
     if (self.repeatingTimer) {
@@ -236,8 +264,9 @@
     
     // ****  Set the Next Timer label **** //
     NSInteger nextTimerIndex = [GOTimersState currentState].currentTimerIndex +1;
+    NSLog(@"nextTimerIndex: %ld, allCount: %lu", (long)nextTimerIndex, (unsigned long)self.allTimers.count );
     if (nextTimerIndex == self.allTimers.count) {
-        self.NextDetailLabel.text = @"";
+        self.NextDetailLabel.text = @" ";
     } else {
         GOTimer *nextTimer = self.allTimers[nextTimerIndex][0];
         NSString *nextTimerName = nextTimer.timerName;
@@ -277,7 +306,7 @@
     NSString *alertTitle;
     if ([GOTimersState currentState].currentTimerIndex +1 == self.allTimers.count){
         // No more timers in the queue
-        alertTitle = @"There are no more times.";
+        alertTitle = @"There are no more timers.";
     } else {
         alertTitle = @"Press OK to show next timer.";
     }
@@ -287,6 +316,7 @@
     
     [self stopTimer];
     [GOTimersState currentState].isActive = NO;
+    
     
     NSString *soundFilePath =
     [[NSBundle mainBundle] pathForResource: @"alarm_beep"
@@ -304,14 +334,16 @@
     [soundPlayer setDelegate: self];
 }
 
-- (void)loadNextTimer {
+- (void)loadTimer:(NSInteger)timerStep {
+    NSInteger requestedTimer = [GOTimersState currentState].currentTimerIndex + timerStep;
     
-    if ([GOTimersState currentState].currentTimerIndex +1 == self.allTimers.count) {
+    
+    if (requestedTimer == self.allTimers.count) {
         // No more timers in queue
-        
+        NSLog(@"No more timers in queue");
         
     } else {
-        [GOTimersState currentState].currentTimerIndex ++;
+        [GOTimersState currentState].currentTimerIndex = requestedTimer;
         self.thisTimer = self.allTimers[[GOTimersState currentState].currentTimerIndex][0];
         [GOTimersState currentState].timerOrderIndex = [[[GOTimerStore sharedStore] allTimers] indexOfObjectIdenticalTo:self.thisTimer];
         [self resetTimer];
@@ -448,7 +480,6 @@
 -(IBAction)playTouched:(id)sender {
     if ([self.playButton.titleLabel.text isEqual: @"Start"]) {
         NSLog(@"Start touched");
-//        [self resetTimer];
         [self startTimer];
     } else {
         NSLog(@"Reset touched");
@@ -462,15 +493,33 @@
     [self pauseTimer];
 }
 
+- (IBAction)previousTouched:(id)sender {
+    NSLog(@"Previos");
+    [self loadTimer:-1];
+}
+
+- (IBAction)nextTouched:(id)sender {
+    NSLog(@"Next");
+    [self loadTimer:1];
+}
+
 #pragma mark - Alert View Actions
 - (void)didPresentAlertView:(UIAlertView *)alertView {
-    [self.soundPlayer play];
-    self.tabBarController.selectedIndex = 1;
+    if (alertView == self.alertView) {
+        [self.soundPlayer play];
+        self.tabBarController.selectedIndex = 1;
+    }
+    
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    [self.soundPlayer stop];
-    [self loadNextTimer];
+    if (alertView == self.alertView) {
+        [self.soundPlayer stop];
+        [self loadTimer:1];
+    } else if (alertView == self.firstAlertView){
+        self.tabBarController.selectedIndex = 0;
+    }
+    
 }
 
 @end

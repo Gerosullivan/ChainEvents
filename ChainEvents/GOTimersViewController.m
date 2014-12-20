@@ -78,7 +78,8 @@
     detailLabel = (UILabel *)[cell viewWithTag:3];
     detailLabel.text = TimerDetail;
     
-    if ([GOTimersState currentState].isActive && [GOTimersState currentState].timerOrderIndex == indexPath.row) {
+    NSLog(@"timerIndex %ld, row %ld", (long)[GOTimersState currentState].timerOrderIndex , (long)indexPath.row);
+    if ([GOTimersState currentState].isActive && indexPath.row <= [GOTimersState currentState].timerOrderIndex) {
         cell.backgroundColor = [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
@@ -106,14 +107,14 @@
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
-    if ([GOTimersState currentState].isActive && [GOTimersState currentState].timerOrderIndex == indexPath.row) {
+    if ([GOTimersState currentState].isActive && indexPath.row <= [GOTimersState currentState].timerOrderIndex) {
         return NO;
     }
     return YES;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([GOTimersState currentState].isActive == YES && [GOTimersState currentState].timerOrderIndex == indexPath.row) {
+    if ([GOTimersState currentState].isActive == YES && indexPath.row <= [GOTimersState currentState].timerOrderIndex) {
         return nil;
     }
     return indexPath;
