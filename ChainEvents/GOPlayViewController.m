@@ -11,6 +11,8 @@
 #import "GOTimerStore.h"
 #import "GOTimer.h"
 #import "GOTimersState.h"
+#import "GOTimeDateFormatter.h"
+
 
 @interface GOPlayViewController ()
 
@@ -90,7 +92,7 @@
     
     [GOTimersState currentState].countdownRemaining = self.countdownFrom - timeInterval;
     
-    self.timerLabel.text = [self makeTimerString];
+    [self makeTimerString];
     
     if ([GOTimersState currentState].countdownRemaining <= 0) {
         [self timerFinished];
@@ -118,7 +120,7 @@
     self.countdownFrom = self.thisTimer.timerDuration;
     
     [GOTimersState currentState].countdownRemaining = self.thisTimer.timerDuration;
-    self.timerLabel.text = [self makeTimerString];
+    [self makeTimerString];
     
     [GOTimersState currentState].isActive = NO;
 }
@@ -171,13 +173,38 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:alarm];
 }
 
-- (NSString *)makeTimerString {
+- (void)makeTimerString {
     NSInteger ti = (NSInteger)[GOTimersState currentState].countdownRemaining;
     NSInteger seconds = ti % 60;
     NSInteger minutes = (ti / 60) % 60;
     NSInteger hours = (ti / 3600);
     
-    return [NSString stringWithFormat:@"%02ld:%02ld.%02ld", (long)hours, (long)minutes, (long)seconds];
+    self.timerLabel.text = [NSString stringWithFormat:@"%02ld:%02ld.%02ld", (long)hours, (long)minutes, (long)seconds];
+    [self makeTimeLeftLabel];
+}
+
+- (void)makeTimeLeftLabel {
+    // Work out how much time is left
+    int timeLeft = 0;
+    for (NSInteger x = [GOTimersState currentState].currentTimerIndex +1 ; x < [self.allTimers count] ; x ++) {
+        GOTimer *thisTimer = self.allTimers[x][0];
+        
+        timeLeft += thisTimer.timerDuration;
+    }
+    timeLeft += [GOTimersState currentState].countdownRemaining;
+    
+    GOTimeDateFormatter *formatter = [[GOTimeDateFormatter alloc] init];
+    NSString *timeLeftHMS = [formatter shortTime:timeLeft];
+    
+    NSDate *finish = [NSDate dateWithTimeIntervalSinceNow:timeLeft];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterNoStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    NSString *formattedDateString = [dateFormatter stringFromDate:finish];
+    
+    self.statusLabel.text = [NSString stringWithFormat:@"%@ left, Finish at %@", timeLeftHMS, formattedDateString];
+    
 }
 
 - (void)makeTimerNames {
@@ -203,10 +230,14 @@
     
     // ****  Set the Next Timer label **** //
     NSInteger nextTimerIndex = [GOTimersState currentState].currentTimerIndex +1;
-    GOTimer *nextTimer = self.allTimers[nextTimerIndex][0];
-    NSString *nextTimerName = nextTimer.timerName;
-    NSString *nextTimerPrefix = self.allTimers[nextTimerIndex][1];
-    self.NextDetailLabel.text = [NSString stringWithFormat:@"%@%@", nextTimerPrefix, nextTimerName];
+    if (nextTimerIndex == self.allTimers.count) {
+        self.NextDetailLabel.text = @"";
+    } else {
+        GOTimer *nextTimer = self.allTimers[nextTimerIndex][0];
+        NSString *nextTimerName = nextTimer.timerName;
+        NSString *nextTimerPrefix = self.allTimers[nextTimerIndex][1];
+        self.NextDetailLabel.text = [NSString stringWithFormat:@"%@%@", nextTimerPrefix, nextTimerName];
+    }
 }
 
 - (void)populateTimersList {
@@ -230,14 +261,22 @@
             [self.allTimers addObject:timerDetails];
         }
     }
-    NSLog(@"timersList: %@", self.allTimers);
+//    NSLog(@"timersList: %@", self.allTimers);
 }
 
 - (void)timerFinished {
     NSLog(@"Timer Finised");
     
     self.alertView = nil;
-    self.alertView = [[UIAlertView alloc] initWithTitle:@"Timer Finished" message:@"Next Timer ready" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    NSString *alertTitle;
+    if ([GOTimersState currentState].currentTimerIndex +1 == self.allTimers.count){
+        // No more timers in the queue
+        alertTitle = @"There are no more times.";
+    } else {
+        alertTitle = @"Press OK to show next timer.";
+    }
+    
+    self.alertView = [[UIAlertView alloc] initWithTitle:@"Timer Finished" message:alertTitle delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [self.alertView show];
     
     [self stopTimer];
@@ -257,6 +296,22 @@
     
     [soundPlayer prepareToPlay];
     [soundPlayer setDelegate: self];
+}
+
+- (void)loadNextTimer {
+    
+    if ([GOTimersState currentState].currentTimerIndex +1 == self.allTimers.count) {
+        // No more timers in queue
+        
+        
+    } else {
+        [GOTimersState currentState].currentTimerIndex ++;
+        self.thisTimer = self.allTimers[[GOTimersState currentState].currentTimerIndex][0];
+        [GOTimersState currentState].timerOrderIndex = [[[GOTimerStore sharedStore] allTimers] indexOfObjectIdenticalTo:self.thisTimer];
+        [self resetTimer];
+        [self makeTimerNames];
+    }
+    
 }
 
 
@@ -334,6 +389,7 @@
     self.statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, footerButtons.frame.size.width, 30)];
     self.statusLabel.backgroundColor = [UIColor clearColor];
     self.statusLabel.text = @"3h 50m remaining. Finish at 12:34 PM.";
+    [self makeTimeLeftLabel];
     self.statusLabel.textColor = [UIColor lightGrayColor];
     self.statusLabel.textAlignment = NSTextAlignmentCenter;
     
@@ -408,6 +464,7 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     [self.soundPlayer stop];
+    [self loadNextTimer];
 }
 
 @end

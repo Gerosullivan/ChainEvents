@@ -35,6 +35,7 @@
     
     if (self) {
         _currentTimerIndex = 0;
+        _timerOrderIndex = 0;
         _isActive = NO;
         _countdownRemaining = 0;
     }

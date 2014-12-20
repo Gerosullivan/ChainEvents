@@ -23,6 +23,7 @@
 		C275654C1A3F7E290094116E /* CircleLineButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C275654B1A3F7E290094116E /* CircleLineButton.m */; };
 		C275654F1A42264D0094116E /* alarm.caf in Resources */ = {isa = PBXBuildFile; fileRef = C275654E1A42264D0094116E /* alarm.caf */; };
 		C28F1D951A3CC82A00531EE3 /* GOPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C28F1D941A3CC82A00531EE3 /* GOPlayViewController.m */; };
+		C2BFFBCF1A45D63D00DF8E56 /* GOTimeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BFFBCE1A45D63D00DF8E56 /* GOTimeDateFormatter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,8 @@
 		C275654E1A42264D0094116E /* alarm.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = alarm.caf; path = ../alarm.caf; sourceTree = "<group>"; };
 		C28F1D931A3CC82A00531EE3 /* GOPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOPlayViewController.h; sourceTree = "<group>"; };
 		C28F1D941A3CC82A00531EE3 /* GOPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOPlayViewController.m; sourceTree = "<group>"; };
+		C2BFFBCD1A45D63D00DF8E56 /* GOTimeDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOTimeDateFormatter.h; sourceTree = "<group>"; };
+		C2BFFBCE1A45D63D00DF8E56 /* GOTimeDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOTimeDateFormatter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +151,8 @@
 		C22F430F1A447C230078A651 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C2BFFBCD1A45D63D00DF8E56 /* GOTimeDateFormatter.h */,
+				C2BFFBCE1A45D63D00DF8E56 /* GOTimeDateFormatter.m */,
 				C22F430C1A43849D0078A651 /* GOTimersState.h */,
 				C22F430D1A43849D0078A651 /* GOTimersState.m */,
 				7A715FA61A2E1D75008874EC /* GOTimerStore.h */,
@@ -287,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2BFFBCF1A45D63D00DF8E56 /* GOTimeDateFormatter.m in Sources */,
 				7A9DE9681A1FA70900D10C37 /* AppDelegate.m in Sources */,
 				7A9DE9651A1FA70900D10C37 /* main.m in Sources */,
 				7A715FA81A2E1D75008874EC /* GOTimerStore.m in Sources */,

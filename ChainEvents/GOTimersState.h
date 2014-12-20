@@ -14,6 +14,7 @@
 + (instancetype)currentState;
 
 @property (nonatomic) NSInteger currentTimerIndex;
+@property (nonatomic) NSInteger timerOrderIndex;
 @property (nonatomic) BOOL isActive;
 @property (nonatomic) NSInteger countdownRemaining;
 

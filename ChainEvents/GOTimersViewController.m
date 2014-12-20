@@ -11,6 +11,7 @@
 #import "GOTimer.h"
 #import "GODetailViewController.h"
 #import "GOTimersState.h"
+#import "GOTimeDateFormatter.h"
 
 @implementation GOTimersViewController
 
@@ -64,13 +65,10 @@
     nameLabel = (UILabel *)[cell viewWithTag:2];
     nameLabel.text = timer.timerName;
     
-    NSMutableString *TimerDetail = [[NSMutableString alloc] init];
-    NSInteger ti = (NSInteger)timer.timerDuration;
-    NSInteger seconds = ti % 60;
-    NSInteger minutes = (ti / 60) % 60;
-    NSInteger hours = (ti / 3600);
+    GOTimeDateFormatter *formatter = [[GOTimeDateFormatter alloc] init];
+    NSString *timeHMS = [formatter shortTime:timer.timerDuration];
     
-    TimerDetail = [NSMutableString stringWithFormat:@"%02ld:%02ld.%02ld", (long)hours, (long)minutes, (long)seconds];
+    NSMutableString *TimerDetail = [[NSMutableString alloc] initWithString:timeHMS];
     
     if (timer.timerRepeat != 0) {
         NSString *repeatText = [NSString stringWithFormat:@" - Repeat %@", timer.timerRepeatOptions[timer.timerRepeat]];
@@ -80,7 +78,7 @@
     detailLabel = (UILabel *)[cell viewWithTag:3];
     detailLabel.text = TimerDetail;
     
-    if ([GOTimersState currentState].isActive == YES && [GOTimersState currentState].currentTimerIndex == indexPath.row) {
+    if ([GOTimersState currentState].isActive && [GOTimersState currentState].timerOrderIndex == indexPath.row) {
         cell.backgroundColor = [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
@@ -108,14 +106,14 @@
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
-    if ([GOTimersState currentState].isActive == YES && [GOTimersState currentState].currentTimerIndex == indexPath.row) {
+    if ([GOTimersState currentState].isActive && [GOTimersState currentState].timerOrderIndex == indexPath.row) {
         return NO;
     }
     return YES;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([GOTimersState currentState].isActive == YES && [GOTimersState currentState].currentTimerIndex == indexPath.row) {
+    if ([GOTimersState currentState].isActive == YES && [GOTimersState currentState].timerOrderIndex == indexPath.row) {
         return nil;
     }
     return indexPath;
