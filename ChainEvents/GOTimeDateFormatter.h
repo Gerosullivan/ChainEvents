@@ -11,5 +11,6 @@
 @interface GOTimeDateFormatter : NSDate
 
 - (NSString *)shortTime:(NSInteger)interval;
+- (NSString *)clockTime:(NSInteger)interval;
 
 @end

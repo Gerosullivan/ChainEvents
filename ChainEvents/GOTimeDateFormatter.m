@@ -29,4 +29,12 @@
     return TimerDetail;
 }
 
+- (NSString *)clockTime:(NSInteger)interval {
+    NSInteger seconds = interval % 60;
+    NSInteger minutes = (interval / 60) % 60;
+    NSInteger hours = (interval / 3600);
+    
+    return [NSString stringWithFormat:@"%02ld:%02ld.%02ld", (long)hours, (long)minutes, (long)seconds];
+}
+
 @end

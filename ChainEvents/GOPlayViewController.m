@@ -167,6 +167,7 @@
     UILocalNotification *alarm = [[UILocalNotification alloc] init];
     alarm.alertBody = @"Timer finished";
     NSDate *fireDate = [NSDate dateWithTimeInterval:[GOTimersState currentState].countdownRemaining sinceDate:self.startDate];
+    NSLog(@"Local notification sent. Fire date: %@", fireDate);
     alarm.fireDate = fireDate;
     alarm.soundName = @"alarm_beep.caf";
     
@@ -174,24 +175,26 @@
 }
 
 - (void)makeTimerString {
-    NSInteger ti = (NSInteger)[GOTimersState currentState].countdownRemaining;
-    NSInteger seconds = ti % 60;
-    NSInteger minutes = (ti / 60) % 60;
-    NSInteger hours = (ti / 3600);
-    
-    self.timerLabel.text = [NSString stringWithFormat:@"%02ld:%02ld.%02ld", (long)hours, (long)minutes, (long)seconds];
-    [self makeTimeLeftLabel];
+    GOTimeDateFormatter *formatter = [[GOTimeDateFormatter alloc] init];
+    self.timerLabel.text = [formatter clockTime:[GOTimersState currentState].countdownRemaining];
+    [self makeTimeLeftAndDone];
 }
 
-- (void)makeTimeLeftLabel {
+- (void)makeTimeLeftAndDone {
     // Work out how much time is left
     int timeLeft = 0;
-    for (NSInteger x = [GOTimersState currentState].currentTimerIndex +1 ; x < [self.allTimers count] ; x ++) {
+    int timeDone = 0;
+    for (NSInteger x =  0 ; x < [self.allTimers count] ; x ++) {
         GOTimer *thisTimer = self.allTimers[x][0];
         
-        timeLeft += thisTimer.timerDuration;
+        if (x < [GOTimersState currentState].currentTimerIndex) {
+            timeDone += thisTimer.timerDuration;
+        } else if (x > [GOTimersState currentState].currentTimerIndex) {
+            timeLeft += thisTimer.timerDuration;
+        }
     }
     timeLeft += [GOTimersState currentState].countdownRemaining;
+    timeDone += self.thisTimer.timerDuration - [GOTimersState currentState].countdownRemaining;
     
     GOTimeDateFormatter *formatter = [[GOTimeDateFormatter alloc] init];
     NSString *timeLeftHMS = [formatter shortTime:timeLeft];
@@ -204,6 +207,9 @@
     NSString *formattedDateString = [dateFormatter stringFromDate:finish];
     
     self.statusLabel.text = [NSString stringWithFormat:@"%@ left, Finish at %@", timeLeftHMS, formattedDateString];
+    
+    // Total time done
+    self.totalTimeLabel.text = [formatter clockTime:timeDone];
     
 }
 
@@ -389,7 +395,7 @@
     self.statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, footerButtons.frame.size.width, 30)];
     self.statusLabel.backgroundColor = [UIColor clearColor];
     self.statusLabel.text = @"3h 50m remaining. Finish at 12:34 PM.";
-    [self makeTimeLeftLabel];
+    [self makeTimeLeftAndDone];
     self.statusLabel.textColor = [UIColor lightGrayColor];
     self.statusLabel.textAlignment = NSTextAlignmentCenter;
     
