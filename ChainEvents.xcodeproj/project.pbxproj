@@ -67,7 +67,7 @@
 		C28F1D941A3CC82A00531EE3 /* GOPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOPlayViewController.m; sourceTree = "<group>"; };
 		C2BFFBCD1A45D63D00DF8E56 /* GOTimeDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOTimeDateFormatter.h; sourceTree = "<group>"; };
 		C2BFFBCE1A45D63D00DF8E56 /* GOTimeDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOTimeDateFormatter.m; sourceTree = "<group>"; };
-		C2BFFBD01A477B5E00DF8E56 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ChainEvents/Images.xcassets; sourceTree = "<group>"; };
+		C2BFFBD01A477B5E00DF8E56 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +91,6 @@
 		7A9DE9561A1FA70900D10C37 = {
 			isa = PBXGroup;
 			children = (
-				C2BFFBD01A477B5E00DF8E56 /* Images.xcassets */,
 				7A9DE9611A1FA70900D10C37 /* ChainEvents */,
 				7A9DE97E1A1FA70900D10C37 /* ChainEventsTests */,
 				7A9DE9601A1FA70900D10C37 /* Products */,
@@ -116,6 +115,7 @@
 				7A9DE9661A1FA70900D10C37 /* AppDelegate.h */,
 				7A9DE9671A1FA70900D10C37 /* AppDelegate.m */,
 				7A9DE9621A1FA70900D10C37 /* Supporting Files */,
+				C2BFFBD01A477B5E00DF8E56 /* Images.xcassets */,
 			);
 			path = ChainEvents;
 			sourceTree = "<group>";
@@ -434,6 +434,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -449,6 +450,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

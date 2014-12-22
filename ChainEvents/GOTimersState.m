@@ -38,6 +38,8 @@
         _timerOrderIndex = 0;
         _isActive = NO;
         _countdownRemaining = 0;
+        _createdFirstTimer = NO;
+        _shownAllCoachMarks = NO;
     }
     
     return self;

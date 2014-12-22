@@ -13,6 +13,13 @@
 #import "GOTimersState.h"
 #import "GOTimeDateFormatter.h"
 
+@interface GOTimersViewController ()
+
+@property (nonatomic) UIView *coachMark_add;
+@property (nonatomic) UIView *coachMark_play;
+
+@end
+
 @implementation GOTimersViewController
 
 - (void)viewDidLoad {
@@ -26,17 +33,64 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     [self.tableView reloadData];
+    
+    // Create the CoachMark View for the Add button
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    
+    self.coachMark_add = [[UIView alloc] initWithFrame:CGRectMake(0, 64, screenWidth, screenHeight)];
+    self.coachMark_add.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    UIImage *coachImage = [UIImage imageNamed:@"coachMark"];
+    UIImageView *coachImageView = [[UIImageView alloc] initWithImage:coachImage];
+    [self.coachMark_add addSubview:coachImageView];
+    coachImageView.frame = CGRectMake(screenWidth - coachImage.size.width - 26, 4, coachImage.size.width, coachImage.size.height);
+    [self.tabBarController.view addSubview:self.coachMark_add];
+    
+    // Create the second Coach Mark for the Play button
+    UIImage *coachImage2 = [UIImage imageNamed:@"coachMark2"];
+    UIImageView *coachImageView2 = [[UIImageView alloc] initWithImage:coachImage2];
+    self.coachMark_play = [[UIView alloc] initWithFrame:CGRectMake(0, screenHeight - coachImage2.size.height - 50, screenWidth, coachImage2.size.height)];
+    [self.coachMark_play addSubview:coachImageView2];
+    [self.tabBarController.view addSubview:self.coachMark_play];
+    self.coachMark_play.hidden = YES;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self.tableView reloadData];
+    
+    if ([[[GOTimerStore sharedStore] allTimers] count] == 0) {
+        // No timers - show coach mark
+        self.coachMark_add.hidden = NO;
+        self.navigationItem.leftBarButtonItem = nil;
+    } else {
+        // Test to see if the fist timer has been created
+        // And we have not shown the Play CoachMark
+        if ([GOTimersState currentState].createdFirstTimer && ![GOTimersState currentState].shownAllCoachMarks){
+            self.coachMark_play.hidden = NO;
+            [GOTimersState currentState].shownAllCoachMarks = YES;
+        } else {
+            self.coachMark_play.hidden = YES;
+        }
+        
+        self.navigationItem.leftBarButtonItem = self.editButtonItem;
+        self.coachMark_add.hidden = YES;
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    self.coachMark_play.hidden = YES;
 }
 
 #pragma mark - Table delegate

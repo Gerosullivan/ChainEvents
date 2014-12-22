@@ -9,6 +9,7 @@
 #import "GODetailViewController.h"
 #import "GORepeatViewController.h"
 #import "GOTimerStore.h"
+#import "GOTimersState.h"
 
 @interface GODetailViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
@@ -70,6 +71,9 @@
         [[GOTimerStore sharedStore] removeTimer:self.timer];
     } else {
         self.timer.timerName = self.nameField.text;
+        
+        if (![GOTimersState currentState].createdFirstTimer)
+            [GOTimersState currentState].createdFirstTimer = YES;
     }
 
 }

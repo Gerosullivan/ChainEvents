@@ -17,5 +17,7 @@
 @property (nonatomic) NSInteger timerOrderIndex;
 @property (nonatomic) BOOL isActive;
 @property (nonatomic) NSInteger countdownRemaining;
+@property (nonatomic) BOOL createdFirstTimer;
+@property (nonatomic) BOOL shownAllCoachMarks;
 
 @end
