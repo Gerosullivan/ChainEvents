@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>currentTimerIndex</key>
+	<integer>0</integer>
+	<key>timerOrderIndex</key>
+	<integer>0</integer>
+	<key>isActive</key>
+	<false/>
+	<key>countdownRemaining</key>
+	<integer>0</integer>
+	<key>createdFirstTimer</key>
+	<false/>
+	<key>shownAllCoachMarks</key>
+	<false/>
+</dict>
+</plist>

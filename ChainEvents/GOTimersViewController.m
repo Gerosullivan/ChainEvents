@@ -46,6 +46,7 @@
     [self.coachMark_add addSubview:coachImageView];
     coachImageView.frame = CGRectMake(screenWidth - coachImage.size.width - 26, 4, coachImage.size.width, coachImage.size.height);
     [self.tabBarController.view addSubview:self.coachMark_add];
+    self.coachMark_add.hidden = YES;
     
     // Create the second Coach Mark for the Play button
     UIImage *coachImage2 = [UIImage imageNamed:@"coachMark2"];
@@ -55,6 +56,10 @@
     [self.tabBarController.view addSubview:self.coachMark_play];
     self.coachMark_play.hidden = YES;
     
+    // On App start, check to see if there was a previous timer running
+    if ([GOTimersState currentState].currentTimerIndex > 0) {
+        self.tabBarController.selectedIndex = 1;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -132,7 +137,7 @@
     detailLabel = (UILabel *)[cell viewWithTag:3];
     detailLabel.text = TimerDetail;
     
-    NSLog(@"timerIndex %ld, row %ld", (long)[GOTimersState currentState].timerOrderIndex , (long)indexPath.row);
+//    NSLog(@"timerIndex %ld, row %ld", (long)[GOTimersState currentState].timerOrderIndex , (long)indexPath.row);
     if ([GOTimersState currentState].isActive && indexPath.row <= [GOTimersState currentState].timerOrderIndex) {
         cell.backgroundColor = [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;

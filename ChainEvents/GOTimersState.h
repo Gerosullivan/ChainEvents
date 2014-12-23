@@ -20,4 +20,6 @@
 @property (nonatomic) BOOL createdFirstTimer;
 @property (nonatomic) BOOL shownAllCoachMarks;
 
+- (void)saveState;
+
 @end

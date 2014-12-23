@@ -40,7 +40,6 @@
 
 // Alert elements
 @property (nonatomic) UIAlertView *alertView;
-@property (nonatomic) UIAlertView *firstAlertView;
 @property (nonatomic, retain) AVAudioPlayer *soundPlayer;
 
 @end
@@ -65,19 +64,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    if ([[[GOTimerStore sharedStore] allTimers] count] == 0) {
-        self.firstAlertView = nil;
-        
-        self.firstAlertView = [[UIAlertView alloc] initWithTitle:@"No Timers!" message:@"Please add timers in the Setup screen." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [self.firstAlertView show];
-        return;
-    }
-    
-    // Check to see if this is a new initF
-    if (self.allTimers == nil) {
-        [GOTimersState currentState].currentTimerIndex = 0;
-    }
     
     [self populateTimersList];
     
@@ -505,21 +491,14 @@
 
 #pragma mark - Alert View Actions
 - (void)didPresentAlertView:(UIAlertView *)alertView {
-    if (alertView == self.alertView) {
-        [self.soundPlayer play];
-        self.tabBarController.selectedIndex = 1;
-    }
-    
+    [self.soundPlayer play];
+    self.tabBarController.selectedIndex = 1;
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (alertView == self.alertView) {
-        [self.soundPlayer stop];
-        [self loadTimer:1];
-    } else if (alertView == self.firstAlertView){
-        self.tabBarController.selectedIndex = 0;
-    }
-    
+    [self.soundPlayer stop];
+    [self loadTimer:1];
+
 }
 
 @end

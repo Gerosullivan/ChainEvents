@@ -24,6 +24,7 @@
 		C28F1D951A3CC82A00531EE3 /* GOPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C28F1D941A3CC82A00531EE3 /* GOPlayViewController.m */; };
 		C2BFFBCF1A45D63D00DF8E56 /* GOTimeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BFFBCE1A45D63D00DF8E56 /* GOTimeDateFormatter.m */; };
 		C2BFFBD11A477B5E00DF8E56 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2BFFBD01A477B5E00DF8E56 /* Images.xcassets */; };
+		C2BFFBD51A48C94000DF8E56 /* GOTimersState.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2BFFBD41A48C94000DF8E56 /* GOTimersState.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		C2BFFBCD1A45D63D00DF8E56 /* GOTimeDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOTimeDateFormatter.h; sourceTree = "<group>"; };
 		C2BFFBCE1A45D63D00DF8E56 /* GOTimeDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOTimeDateFormatter.m; sourceTree = "<group>"; };
 		C2BFFBD01A477B5E00DF8E56 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		C2BFFBD41A48C94000DF8E56 /* GOTimersState.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GOTimersState.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 		7A9DE9611A1FA70900D10C37 /* ChainEvents */ = {
 			isa = PBXGroup;
 			children = (
+				C2BFFBD41A48C94000DF8E56 /* GOTimersState.plist */,
 				C22F430F1A447C230078A651 /* Model */,
 				C22F43111A447C790078A651 /* View */,
 				C22F43101A447C630078A651 /* Controller */,
@@ -270,6 +273,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2BFFBD51A48C94000DF8E56 /* GOTimersState.plist in Resources */,
 				7A9DE9711A1FA70900D10C37 /* Main.storyboard in Resources */,
 				C2BFFBD11A477B5E00DF8E56 /* Images.xcassets in Resources */,
 				7A9DE9761A1FA70900D10C37 /* LaunchScreen.xib in Resources */,

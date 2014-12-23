@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "GOTimerStore.h"
+#import "GOTimersState.h"
 
 @interface AppDelegate ()
 
@@ -36,6 +37,8 @@
     } else {
         NSLog(@"Could not save any of the GOTimers");
     }
+    
+    [[GOTimersState currentState] saveState];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
