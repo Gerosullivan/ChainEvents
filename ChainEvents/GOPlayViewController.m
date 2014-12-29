@@ -23,7 +23,7 @@
 @property (nonatomic) BOOL isPaused;
 @property (nonatomic) NSTimeInterval countdownFrom;
 @property (nonatomic) NSTimeInterval totalTimeRunning;
-@property (nonatomic) NSMutableArray *allTimers;
+@property (nonatomic) NSArray *allTimers;
 
 // Timer Labels & Buttons
 @property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel;
@@ -65,7 +65,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self populateTimersList];
+    [[GOTimerStore sharedStore] populateTimerInstancesList];
+    self.allTimers = [GOTimerStore sharedStore].allTimerInstances;
     
     // Reload the timer if timer not running,
     // as it could have been modified since first loaded
@@ -261,29 +262,7 @@
     }
 }
 
-- (void)populateTimersList {
-    self.allTimers = [[NSMutableArray alloc] init];
-    
-    for (int x = 0 ; x < [[[GOTimerStore sharedStore] allTimers] count]; x++) {
-        NSArray *timerDetails = [[NSArray alloc] init];
-        GOTimer *thisTimer = [[GOTimerStore sharedStore] allTimers][x];
-        NSString *fullPrefix;
-        NSInteger timerNumber = x + 1;
-        
-        for (int y = 0; y <= thisTimer.timerRepeat; y++) {
-            if (thisTimer.timerRepeat > 0) {
-                fullPrefix = [NSString stringWithFormat:@"%ld.%ld ",
-                              (long)timerNumber,
-                              (long)y + 1];
-            } else {
-                fullPrefix = [NSString stringWithFormat:@"%ld ", (long)timerNumber];
-            }
-            timerDetails = @[thisTimer, fullPrefix];
-            [self.allTimers addObject:timerDetails];
-        }
-    }
-//    NSLog(@"timersList: %@", self.allTimers);
-}
+
 
 - (void)timerFinished {
     NSLog(@"Timer Finised");
@@ -368,21 +347,11 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-//    UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 540, 10)];
-//    footer.backgroundColor = [UIColor clearColor];
-//    
-//    UILabel *lbl = [[UILabel alloc]initWithFrame:footer.frame];
-//    lbl.backgroundColor = [UIColor clearColor];
-//    lbl.text = @"Your Text";
-//    lbl.textAlignment = NSTextAlignmentCenter;
-//    [footer addSubview:lbl];
     
     int buttonSize = 90;
     
     UIView *footerButtons = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 200)];
     footerButtons.backgroundColor = [UIColor clearColor];
-    
-//    footerButtons.translatesAutoresizingMaskIntoConstraints = NO;
     
     // Create the round Play button
     

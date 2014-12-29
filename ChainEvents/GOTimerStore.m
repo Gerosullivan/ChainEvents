@@ -59,12 +59,14 @@
     GOTimer *timer = [[GOTimer alloc] init];
     
     [self.privateTimers addObject:timer];
+    [self populateTimerInstancesList];
     
     return timer;
 }
 
 - (void)removeTimer:(GOTimer *)timer {
     [self.privateTimers removeObjectIdenticalTo:timer];
+    [self populateTimerInstancesList];
 }
 
 - (void)moveTimerAtIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
@@ -77,25 +79,8 @@
     
     [self.privateTimers removeObjectAtIndex:fromIndex];
     [self.privateTimers insertObject:timer atIndex:toIndex];
+    [self populateTimerInstancesList];
 }
-
-//- (GOTimer *)currentTimer {
-//    NSUInteger currentTimerIndex = [self.privateTimers indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-//        if ([(GOTimer*)obj countdownRemaining] > 0 || [(GOTimer*)obj currentRepeat] > 0) {
-//            *stop = YES;
-//            return idx;
-//        }
-//        return 0;
-//    }];
-//    if (currentTimerIndex != NSNotFound){
-//        NSLog(@"timerIndex:%lu", (unsigned long)currentTimerIndex);
-//        return self.privateTimers[currentTimerIndex];
-//    } else {
-//        NSLog(@"no timers are current");
-//        return self.privateTimers[0];
-//    }
-//    
-//}
 
 - (NSString *)timerArchivePath
 {
@@ -116,11 +101,29 @@
     return [NSKeyedArchiver archiveRootObject:self.privateTimers toFile:path];
 }
 
-
-
-
-
-
+- (void)populateTimerInstancesList {
+    self.allTimerInstances = [[NSMutableArray alloc] init];
+    
+    for (int x = 0 ; x < [[[GOTimerStore sharedStore] allTimers] count]; x++) {
+        NSArray *timerDetails = [[NSArray alloc] init];
+        GOTimer *thisTimer = [[GOTimerStore sharedStore] allTimers][x];
+        NSString *fullPrefix;
+        NSInteger timerNumber = x + 1;
+        
+        for (int y = 0; y <= thisTimer.timerRepeat; y++) {
+            if (thisTimer.timerRepeat > 0) {
+                fullPrefix = [NSString stringWithFormat:@"%ld.%ld ",
+                              (long)timerNumber,
+                              (long)y + 1];
+            } else {
+                fullPrefix = [NSString stringWithFormat:@"%ld ", (long)timerNumber];
+            }
+            timerDetails = @[thisTimer, fullPrefix];
+            [self.allTimerInstances addObject:timerDetails];
+        }
+    }
+    //    NSLog(@"timersList: %@", self.allTimers);
+}
 
 
 

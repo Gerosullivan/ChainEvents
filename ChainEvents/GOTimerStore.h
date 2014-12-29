@@ -12,13 +12,14 @@
 @interface GOTimerStore : NSObject
 
 @property (nonatomic, readonly) NSArray *allTimers;
+@property (nonatomic) NSMutableArray *allTimerInstances;
 
 + (instancetype)sharedStore;
 
 - (GOTimer *)createTimer;
 - (void)removeTimer:(GOTimer *)timer;
 - (void)moveTimerAtIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex;
-
+- (void)populateTimerInstancesList;
 
 - (BOOL)saveChanges;
 
