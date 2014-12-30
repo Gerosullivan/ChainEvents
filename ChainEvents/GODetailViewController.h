@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GOTimer.h"
 
-@interface GODetailViewController : UITableViewController <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface GODetailViewController : UITableViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic) BOOL existingTimer;
 

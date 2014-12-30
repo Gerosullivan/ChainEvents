@@ -125,7 +125,14 @@
     //    NSLog(@"timersList: %@", self.allTimers);
 }
 
-
+- (NSUInteger)firstIndexOfTimerInInstancesList:(GOTimer *)timer {
+    for (int x = 0; x < [self.allTimerInstances count]; x ++) {
+        if (self.allTimerInstances[x][0] == timer){
+            return x;
+        }
+    }
+    return 0;
+}
 
 
 

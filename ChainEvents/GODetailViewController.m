@@ -42,6 +42,7 @@
     
     self.durationPicker.delegate = self;
     self.durationPicker.dataSource = self;
+    self.nameField.delegate = self;
     
     NSInteger ti = (NSInteger)self.timer.timerDuration;
     NSInteger seconds = ti % 60;
@@ -202,10 +203,20 @@
 
 - (IBAction)playTouched:(id)sender {
     NSLog(@"Play touched!");
+    [[GOTimerStore sharedStore] populateTimerInstancesList];
+    NSUInteger timerInstanceIndex = [[GOTimerStore sharedStore] firstIndexOfTimerInInstancesList:self.timer];
+    
+    NSLog(@"timerInstanceIndex, %ld", timerInstanceIndex);
+    [GOTimersState currentState].currentTimerIndex = timerInstanceIndex;
     NSUInteger timerIndex = [[[GOTimerStore sharedStore] allTimers] indexOfObjectIdenticalTo:self.timer];
-    [GOTimersState currentState].currentTimerIndex = timerIndex;
     [GOTimersState currentState].timerOrderIndex = timerIndex;
     self.tabBarController.selectedIndex = 1;
+}
+
+-(BOOL) textFieldShouldReturn:(UITextField *)textField{
+    NSLog(@"Return pressed");
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

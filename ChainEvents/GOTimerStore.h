@@ -20,6 +20,7 @@
 - (void)removeTimer:(GOTimer *)timer;
 - (void)moveTimerAtIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex;
 - (void)populateTimerInstancesList;
+- (NSUInteger)firstIndexOfTimerInInstancesList:(GOTimer *)timer;
 
 - (BOOL)saveChanges;
 
