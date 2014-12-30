@@ -16,7 +16,7 @@
 @interface GOTimersViewController ()
 
 @property (nonatomic) UIView *coachMark_add;
-@property (nonatomic) UIView *coachMark_play;
+@property (nonatomic) UIView *coachMark_start;
 
 @end
 
@@ -51,10 +51,10 @@
     // Create the second Coach Mark for the Play button
     UIImage *coachImage2 = [UIImage imageNamed:@"coachMark2"];
     UIImageView *coachImageView2 = [[UIImageView alloc] initWithImage:coachImage2];
-    self.coachMark_play = [[UIView alloc] initWithFrame:CGRectMake(0, screenHeight - coachImage2.size.height - 50, screenWidth, coachImage2.size.height)];
-    [self.coachMark_play addSubview:coachImageView2];
-    [self.tabBarController.view addSubview:self.coachMark_play];
-    self.coachMark_play.hidden = YES;
+    self.coachMark_start = [[UIView alloc] initWithFrame:CGRectMake(screenWidth - coachImage2.size.width, screenHeight - coachImage2.size.height - 50, coachImage2.size.width, coachImage2.size.height)];
+    [self.coachMark_start addSubview:coachImageView2];
+    [self.view addSubview:self.coachMark_start];
+    self.coachMark_start.hidden = YES;
     
     // On App start, check to see if there was a previous timer running
     if ([GOTimersState currentState].currentTimerIndex > 0) {
@@ -75,10 +75,17 @@
         // Test to see if the fist timer has been created
         // And we have not shown the Play CoachMark
         if ([GOTimersState currentState].createdFirstTimer && ![GOTimersState currentState].shownAllCoachMarks){
-            self.coachMark_play.hidden = NO;
+            self.coachMark_start.hidden = NO;
+            // the coachmark is initiated at the finished position
+            CGPoint endPos = self.coachMark_start.center;
+            CGPoint startPos = CGPointMake(endPos.x, endPos.y+self.coachMark_start.frame.size.height);
+            self.coachMark_start.center = startPos;
+            [UIView animateWithDuration:0.3 delay:0.5 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                self.coachMark_start.center = endPos;
+            } completion:nil];
             [GOTimersState currentState].shownAllCoachMarks = YES;
         } else {
-            self.coachMark_play.hidden = YES;
+            self.coachMark_start.hidden = YES;
         }
         
         self.navigationItem.leftBarButtonItem = self.editButtonItem;
@@ -95,7 +102,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    self.coachMark_play.hidden = YES;
+    self.coachMark_start.hidden = YES;
 }
 
 #pragma mark - Table delegate
