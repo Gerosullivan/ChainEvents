@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *durationPicker;
 @property (weak, nonatomic) IBOutlet UITableViewCell *repeatCell;
 
-@property (nonatomic) UIButton *playButton;
+//@property (nonatomic) UIButton *playButton;
 
 @end
 
@@ -61,8 +61,8 @@
     // Remove the 'Done' button if this is an existing timer
     if (self.existingTimer) {
         self.navigationItem.rightBarButtonItem = nil;
-        self.playButton.hidden = NO;
-        NSLog(@"Dont hide play");
+//        self.playButton.hidden = NO;
+//        NSLog(@"Dont hide play");
     }
     
     self.repeatCell.detailTextLabel.text = self.timer.timerRepeatOptions[self.timer.timerRepeat];
@@ -105,27 +105,27 @@
     }
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UIView *footerButton;
-    
-    if (section == 1) {
-        footerButton = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 100)];
-        self.playButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 50)];
-        [self.playButton setTitle: @"Start Timer" forState:UIControlStateNormal];
-        [self.playButton setTitleColor:[UIColor colorWithRed:0.01 green:0.48 blue:1 alpha:1] forState:UIControlStateNormal];
-        [self.playButton addTarget:self action:@selector(playTouched:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [footerButton addSubview:self.playButton];
-        
-        if (!self.existingTimer)
-            self.playButton.hidden = YES;
-        
-    } else {
-        footerButton = nil;
-    }
-
-    return footerButton;
-}
+//-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+//    UIView *footerButton;
+//    
+//    if (section == 1) {
+//        footerButton = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 100)];
+//        self.playButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 50)];
+//        [self.playButton setTitle: @"Start Timer" forState:UIControlStateNormal];
+//        [self.playButton setTitleColor:[UIColor colorWithRed:0.01 green:0.48 blue:1 alpha:1] forState:UIControlStateNormal];
+//        [self.playButton addTarget:self action:@selector(playTouched:) forControlEvents:UIControlEventTouchUpInside];
+//        
+//        [footerButton addSubview:self.playButton];
+//        
+//        if (!self.existingTimer)
+//            self.playButton.hidden = YES;
+//        
+//    } else {
+//        footerButton = nil;
+//    }
+//
+//    return footerButton;
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     if (section == 1) {
@@ -191,11 +191,11 @@
     
 //    NSLog(@"hours: %d ... mins: %d .... sec: %d .... interval: %d", hoursInt, minsInt, secsInt, interval);
     
-    if (hoursInt + minsInt + secsInt == 0) {
-        self.playButton.hidden = YES;
-    } else {
-        self.playButton.hidden = NO;
-    }
+//    if (hoursInt + minsInt + secsInt == 0) {
+//        self.playButton.hidden = YES;
+//    } else {
+//        self.playButton.hidden = NO;
+//    }
     
     return interval;
     

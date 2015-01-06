@@ -52,6 +52,8 @@
 }
 
 - (NSArray *) allTimers {
+    // return all the timers created in the timerDetail screen
+    // each object includes the number of repeats.
     return self.privateTimers;
 }
 
@@ -84,8 +86,7 @@
 
 - (NSString *)timerArchivePath
 {
-    // Make sure that the first argument is NSDocumentDirectory
-    // and not NSDocumentationDirectory
+    // Get the Archive path
     NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     
     // Get the one document directory from that list
@@ -102,6 +103,10 @@
 }
 
 - (void)populateTimerInstancesList {
+    // Each instance is a repeat object.
+    // E.g. if a Timer object (in allTimers) is repeated 3 times
+    // it is represented 3 times as seperate objects in this list
+    
     self.allTimerInstances = [[NSMutableArray alloc] init];
     
     for (int x = 0 ; x < [[[GOTimerStore sharedStore] allTimers] count]; x++) {
@@ -126,6 +131,8 @@
 }
 
 - (NSUInteger)firstIndexOfTimerInInstancesList:(GOTimer *)timer {
+    // find out the first instance of a timer in the instance list
+    
     for (int x = 0; x < [self.allTimerInstances count]; x ++) {
         if (self.allTimerInstances[x][0] == timer){
             return x;

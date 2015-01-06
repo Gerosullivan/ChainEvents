@@ -5,6 +5,8 @@
 //  Created by Gerald O'Sullivan on 18/12/2014.
 //  Copyright (c) 2014 Ger O'Sullivan. All rights reserved.
 //
+// This Class records the state of the app as the user
+// interacts with timers.
 
 #import <Foundation/Foundation.h>
 @class GOTimer;

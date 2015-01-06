@@ -23,7 +23,7 @@
     return currentState;
 }
 
-// If a programmer calls init - let them know the error of there ways
+// If another programmer calls init - let them know the error of there ways
 - (instancetype) init {
     @throw [NSException exceptionWithName:@"Singleton" reason:@"Use +[GOTimersState currentState]" userInfo:nil];
     return nil;
@@ -44,6 +44,7 @@
         // convert static property list into dictionary object
         NSDictionary *dict = (NSDictionary *)[NSPropertyListSerialization propertyListFromData:plistXML mutabilityOption:NSPropertyListMutableContainersAndLeaves format:&format errorDescription:&errorDesc];
         if (!dict) {
+            // Or property list not created
             NSLog(@"Error reading plist: %@, format: %lu", errorDesc, format);
             // assign values
             _currentTimerIndex = 0;
