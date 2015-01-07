@@ -21,7 +21,6 @@
 @property (nonatomic) NSInteger countdownRemaining;
 @property (nonatomic) BOOL createdFirstTimer;
 @property (nonatomic) BOOL shownAllCoachMarks;
-@property (nonatomic) BOOL timerAlertSound;
 
 - (void)saveState;
 

@@ -63,7 +63,6 @@
         // Non-saved properties
         _countdownRemaining = 0;
         _isActive = NO;
-        _timerAlertSound = NO;
     }
     
     return self;

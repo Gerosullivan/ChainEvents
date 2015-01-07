@@ -22,9 +22,6 @@
 
 @implementation AppDelegate
 
-@synthesize soundPlayer;
-
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     NSLog(@"application didFinishLaunchingWithOptions");
@@ -48,7 +45,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     NSLog(@"applicationDidEnterBackground");
-    [GOTimersState currentState].timerAlertSound = NO;
+
     BOOL success = [[GOTimerStore sharedStore] saveChanges];
     if (success) {
         NSLog(@"Saved all of the GOTimers");
@@ -63,34 +60,16 @@
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    NSLog(@"applicationDidBecomeActive");
-    [GOTimersState currentState].timerAlertSound = YES;
-}
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void(^)())completionHandler{
-    NSLog(@"handleActionWithIdentifier");
-}
-
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    // Fired when App is open in forground,
-    // when in background after the user clicks on alert badge
-    // when in background and phone screen off and above
-    NSLog([GOTimersState currentState].timerAlertSound ? @"didReceiveLocalNotification with audio" : @"didReceiveLocalNotification with NO audio");
-    [self showEndTimerAlert];
-}
-
 
 #pragma mark - Alert View Actions
 - (void)didPresentAlertView:(UIAlertView *)alertView {
-    // Regardless of which tabbar we are on - go to the play VC
+    // Regardless of which tabbar we are on - go to the Play VC
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-
     tabBarController.selectedIndex = 1;
 }
 
@@ -119,7 +98,10 @@
     self.alertView = [[UIAlertView alloc] initWithTitle:@"Timer Finished" message:alertTitle delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [self.alertView show];
     
-    if ([GOTimersState currentState].timerAlertSound) {
+    
+    // Only play the sound if the App is Active
+    // Otherwise the notification alert will sound the alarm
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
         NSString *soundFilePath =
         [[NSBundle mainBundle] pathForResource: @"alarm_beep"
                                         ofType: @"caf"];

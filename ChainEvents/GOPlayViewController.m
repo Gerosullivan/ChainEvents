@@ -12,6 +12,7 @@
 #import "GOTimer.h"
 #import "GOTimersState.h"
 #import "GOTimeDateFormatter.h"
+#import "AppDelegate.h"
 
 
 @interface GOPlayViewController ()
@@ -184,7 +185,6 @@
     
     [[UIApplication sharedApplication] scheduleLocalNotification:alarm];
     
-    [GOTimersState currentState].timerAlertSound = YES;
 }
 
 - (void)makeTimerString {
@@ -270,6 +270,8 @@
     self.repeatingTimer = nil;
     
     [GOTimersState currentState].isActive = NO;
+    AppDelegate *ad = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [ad showEndTimerAlert];
 }
 
 - (void)loadTimer:(NSInteger)timerStep {
