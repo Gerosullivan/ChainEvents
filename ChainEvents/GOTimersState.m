@@ -45,7 +45,7 @@
         NSDictionary *dict = (NSDictionary *)[NSPropertyListSerialization propertyListFromData:plistXML mutabilityOption:NSPropertyListMutableContainersAndLeaves format:&format errorDescription:&errorDesc];
         if (!dict) {
             // Or property list not created
-            NSLog(@"Error reading plist: %@, format: %lu", errorDesc, format);
+            NSLog(@"Error reading plist, or not created: %@, format: %lu", errorDesc, format);
             // assign values
             _currentTimerIndex = 0;
             _timerOrderIndex = 0;

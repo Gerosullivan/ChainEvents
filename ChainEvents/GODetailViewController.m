@@ -66,6 +66,28 @@
     }
     
     self.repeatCell.detailTextLabel.text = self.timer.timerRepeatOptions[self.timer.timerRepeat];
+
+    int o = 40;
+    int w = self.view.frame.size.width/3 - o;
+
+    UILabel *hoursLabel = [[UILabel alloc] initWithFrame:CGRectMake(o, 66, w, 30)];
+    hoursLabel.text = @"hours";
+    hoursLabel.textAlignment = NSTextAlignmentLeft;
+    hoursLabel.font = [UIFont boldSystemFontOfSize:18];
+
+    UILabel *minsLabel = [[UILabel alloc] initWithFrame:CGRectMake(w+(o*2), 66, w, 30)];
+    minsLabel.text = @"mins";
+    minsLabel.textAlignment = NSTextAlignmentLeft;
+    minsLabel.font = [UIFont boldSystemFontOfSize:18];
+
+    UILabel *secsLabel = [[UILabel alloc] initWithFrame:CGRectMake((w*2)+(o*3), 66, w, 30)];
+    secsLabel.text = @"sec";
+    secsLabel.textAlignment = NSTextAlignmentLeft;
+    secsLabel.font = [UIFont boldSystemFontOfSize:18];
+    
+    [self.durationPicker addSubview:hoursLabel];
+    [self.durationPicker addSubview:minsLabel];
+    [self.durationPicker addSubview:secsLabel];
     
 }
 

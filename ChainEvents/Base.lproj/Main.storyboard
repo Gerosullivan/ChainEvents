@@ -288,35 +288,11 @@
                                                         <constraint firstAttribute="height" constant="162" id="eDi-vJ-QKa"/>
                                                     </constraints>
                                                 </pickerView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hours" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UbS-9C-VoA">
-                                                    <rect key="frame" x="53.5" y="78.5" width="44.5" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="min" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BP0-Ib-Dop">
-                                                    <rect key="frame" x="289" y="79" width="29" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sec" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qiG-jT-pho">
-                                                    <rect key="frame" x="528" y="79" width="28" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Thc-Ok-8Cc" secondAttribute="trailing" constant="-8" id="2be-fg-kW8"/>
-                                                <constraint firstItem="Thc-Ok-8Cc" firstAttribute="leading" secondItem="UbS-9C-VoA" secondAttribute="trailing" constant="-90" id="8fU-Z7-U4S"/>
                                                 <constraint firstItem="Thc-Ok-8Cc" firstAttribute="top" secondItem="jSp-DO-Uzt" secondAttribute="topMargin" id="8vC-6R-FOs"/>
-                                                <constraint firstItem="BP0-Ib-Dop" firstAttribute="centerY" secondItem="qiG-jT-pho" secondAttribute="centerY" constant="0.25" id="Ejk-x1-ekk"/>
                                                 <constraint firstItem="Thc-Ok-8Cc" firstAttribute="leading" secondItem="jSp-DO-Uzt" secondAttribute="leadingMargin" id="Lfp-H2-IlK"/>
-                                                <constraint firstItem="qiG-jT-pho" firstAttribute="leading" secondItem="Thc-Ok-8Cc" secondAttribute="trailing" constant="-72" id="dC8-Gx-4vw"/>
-                                                <constraint firstItem="BP0-Ib-Dop" firstAttribute="centerY" secondItem="UbS-9C-VoA" secondAttribute="centerY" id="ikM-Ff-9ud"/>
-                                                <constraint firstItem="BP0-Ib-Dop" firstAttribute="centerX" secondItem="Thc-Ok-8Cc" secondAttribute="centerX" id="wqY-KM-Lah"/>
-                                                <constraint firstItem="Thc-Ok-8Cc" firstAttribute="top" secondItem="UbS-9C-VoA" secondAttribute="bottom" constant="-91" id="xiL-tA-USI"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
