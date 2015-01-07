@@ -9,12 +9,20 @@
 #import "AppDelegate.h"
 #import "GOTimerStore.h"
 #import "GOTimersState.h"
+#import "GOPlayViewController.h"
 
 @interface AppDelegate ()
 
+// Alert elements
+@property (nonatomic) UIAlertView *alertView;
+@property (nonatomic, retain) AVAudioPlayer *soundPlayer;
+
 @end
 
+
 @implementation AppDelegate
+
+@synthesize soundPlayer;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -23,6 +31,13 @@
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
     }
+    
+    UILocalNotification *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    if (localNotif) {
+        //Launched cold with notification
+        [self showEndTimerAlert];
+    }
+    
     return YES;
 }
 
@@ -33,6 +48,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     NSLog(@"applicationDidEnterBackground");
+    [GOTimersState currentState].timerAlertSound = NO;
     BOOL success = [[GOTimerStore sharedStore] saveChanges];
     if (success) {
         NSLog(@"Saved all of the GOTimers");
@@ -50,10 +66,77 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     NSLog(@"applicationDidBecomeActive");
+    [GOTimersState currentState].timerAlertSound = YES;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void(^)())completionHandler{
+    NSLog(@"handleActionWithIdentifier");
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    // Fired when App is open in forground,
+    // when in background after the user clicks on alert badge
+    // when in background and phone screen off and above
+    NSLog([GOTimersState currentState].timerAlertSound ? @"didReceiveLocalNotification with audio" : @"didReceiveLocalNotification with NO audio");
+    [self showEndTimerAlert];
+}
+
+
+#pragma mark - Alert View Actions
+- (void)didPresentAlertView:(UIAlertView *)alertView {
+    // Regardless of which tabbar we are on - go to the play VC
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+
+    tabBarController.selectedIndex = 1;
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (self.soundPlayer.playing)
+        [self.soundPlayer stop];
+    
+    // Access the Play VC and call the next Timer via loadTimer
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    UINavigationController *nc = tabBarController.viewControllers[tabBarController.selectedIndex];
+    GOPlayViewController *pc = (GOPlayViewController *) nc.topViewController;
+    [pc loadTimer:1];
+    
+}
+
+- (void)showEndTimerAlert {
+    self.alertView = nil;
+    NSString *alertTitle;
+    if ([GOTimersState currentState].currentTimerIndex +1 == [GOTimerStore sharedStore].allTimerInstances.count){
+        // No more timers in the queue
+        alertTitle = @"There are no more timers.";
+    } else {
+        alertTitle = @"Press OK to show next timer.";
+    }
+    
+    self.alertView = [[UIAlertView alloc] initWithTitle:@"Timer Finished" message:alertTitle delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [self.alertView show];
+    
+    if ([GOTimersState currentState].timerAlertSound) {
+        NSString *soundFilePath =
+        [[NSBundle mainBundle] pathForResource: @"alarm_beep"
+                                        ofType: @"caf"];
+        
+        NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: soundFilePath];
+        
+        AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL
+                                               error: nil];
+        
+        self.soundPlayer = newPlayer;
+        
+        [self.soundPlayer prepareToPlay];
+        [self.soundPlayer setDelegate: self];
+        
+        [self.soundPlayer play];
+    }
+    
 }
 
 @end

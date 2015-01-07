@@ -38,15 +38,9 @@
 @property (nonatomic) CircleLineButton *pauseButton;
 @property (nonatomic) UILabel *statusLabel;
 
-// Alert elements
-@property (nonatomic) UIAlertView *alertView;
-@property (nonatomic, retain) AVAudioPlayer *soundPlayer;
-
 @end
 
 @implementation GOPlayViewController
-
-@synthesize soundPlayer;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -64,6 +58,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    NSLog([GOTimersState currentState].isActive ? @"viewWillAppear, currentState = Active" : @"viewWillAppear, currentState = NOT Active");
     
     [[GOTimerStore sharedStore] populateTimerInstancesList];
     self.allTimers = [GOTimerStore sharedStore].allTimerInstances;
@@ -187,6 +183,8 @@
     alarm.soundName = @"alarm_beep.caf";
     
     [[UIApplication sharedApplication] scheduleLocalNotification:alarm];
+    
+    [GOTimersState currentState].timerAlertSound = YES;
 }
 
 - (void)makeTimerString {
@@ -229,6 +227,7 @@
 }
 
 - (void)makeTimerNames {
+    NSLog(@"makeTimerNames");
     // Get the total number of timers, including repeats
     NSInteger totalTimers = [self.allTimers count];
     // ****  Set the title of the navigation bar **** //
@@ -266,40 +265,15 @@
 
 - (void)timerFinished {
     NSLog(@"Timer Finised");
+    // LocalNotification will open alert box & sound
+    [self.repeatingTimer invalidate];
+    self.repeatingTimer = nil;
     
-    self.alertView = nil;
-    NSString *alertTitle;
-    if ([GOTimersState currentState].currentTimerIndex +1 == self.allTimers.count){
-        // No more timers in the queue
-        alertTitle = @"There are no more timers.";
-    } else {
-        alertTitle = @"Press OK to show next timer.";
-    }
-    
-    self.alertView = [[UIAlertView alloc] initWithTitle:@"Timer Finished" message:alertTitle delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [self.alertView show];
-    
-    [self stopTimer];
     [GOTimersState currentState].isActive = NO;
-    
-    
-    NSString *soundFilePath =
-    [[NSBundle mainBundle] pathForResource: @"alarm_beep"
-                                    ofType: @"caf"];
-    
-    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: soundFilePath];
-    
-    AVAudioPlayer *newPlayer =
-    [[AVAudioPlayer alloc] initWithContentsOfURL: fileURL
-                                           error: nil];
-    
-    self.soundPlayer = newPlayer;
-    
-    [soundPlayer prepareToPlay];
-    [soundPlayer setDelegate: self];
 }
 
 - (void)loadTimer:(NSInteger)timerStep {
+    NSLog(@"Loading requested timer; %ld", (long)timerStep);
     NSInteger requestedTimer = [GOTimersState currentState].currentTimerIndex + timerStep;
     
     
@@ -458,16 +432,5 @@
     [self loadTimer:1];
 }
 
-#pragma mark - Alert View Actions
-- (void)didPresentAlertView:(UIAlertView *)alertView {
-    [self.soundPlayer play];
-    self.tabBarController.selectedIndex = 1;
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    [self.soundPlayer stop];
-    [self loadTimer:1];
-
-}
 
 @end

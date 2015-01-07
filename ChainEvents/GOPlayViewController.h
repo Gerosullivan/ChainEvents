@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AVFoundation/AVFoundation.h>
 
-@interface GOPlayViewController : UITableViewController <UIAlertViewDelegate, AVAudioPlayerDelegate>
+@interface GOPlayViewController : UITableViewController
+
+- (void)loadTimer:(NSInteger)timerStep;
 
 @end

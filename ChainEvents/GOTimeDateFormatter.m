@@ -34,6 +34,9 @@
     NSInteger minutes = (interval / 60) % 60;
     NSInteger hours = (interval / 3600);
     
+    if (seconds < 0)
+        seconds = 0;
+    
     return [NSString stringWithFormat:@"%02ld:%02ld.%02ld", (long)hours, (long)minutes, (long)seconds];
 }
 
