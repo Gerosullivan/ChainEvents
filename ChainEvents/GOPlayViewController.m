@@ -176,6 +176,8 @@
     [GOTimersState currentState].isActive = YES;
 
     // Create Local Notification alerm to go off when timer finishes
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    
     UILocalNotification *alarm = [[UILocalNotification alloc] init];
     alarm.alertBody = @"Timer finished";
     NSDate *fireDate = [NSDate dateWithTimeInterval:[GOTimersState currentState].countdownRemaining sinceDate:self.startDate];

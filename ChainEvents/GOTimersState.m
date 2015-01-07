@@ -58,11 +58,11 @@
             _timerOrderIndex = (NSInteger)[[dict objectForKey:@"timerOrderIndex"] integerValue];
             _createdFirstTimer = [[dict objectForKey:@"createdFirstTimer"] boolValue];
             _shownAllCoachMarks = [[dict objectForKey:@"shownAllCoachMarks"] boolValue];
+            _countdownRemaining = (NSInteger)[[dict objectForKey:@"countdownRemaining"] integerValue];
+            _isActive = [[dict objectForKey:@"isActive"] boolValue];
+
         }
         
-        // Non-saved properties
-        _countdownRemaining = 0;
-        _isActive = NO;
     }
     
     return self;
@@ -78,6 +78,8 @@
     [plistDict setObject:[NSNumber numberWithInteger:self.timerOrderIndex] forKey:@"timerOrderIndex"];
     [plistDict setObject:[NSNumber numberWithBool:self.createdFirstTimer] forKey:@"createdFirstTimer"];
     [plistDict setObject:[NSNumber numberWithBool:self.shownAllCoachMarks] forKey:@"shownAllCoachMarks"];
+    [plistDict setObject:[NSNumber numberWithInteger:self.countdownRemaining] forKey:@"countdownRemaining"];
+    [plistDict setObject:[NSNumber numberWithBool:self.isActive] forKey:@"isActive"];
 
     NSString *error = nil;
     // create NSData from dictionary
