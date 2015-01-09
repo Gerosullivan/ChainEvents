@@ -83,6 +83,7 @@
         
     } else {
         // No timers running
+        [self stopTimer];
         [self resetTimer];
     }
     
@@ -97,7 +98,15 @@
     // but after viewWillAppear, so refresh here
     [self setStartResetButtonState];
     
-    [self pauseTimer];
+    if (self.isPaused) {
+        [self setPauseButtonState:@"Paused"];
+    } else {
+        if ([GOTimersState currentState].isActive) {
+            [self setPauseButtonState:@"Default"];
+        } else {
+            [self setPauseButtonState:@"Disabled"];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -118,6 +127,7 @@
     if ([GOTimersState currentState].countdownRemaining <= 0) {
         [self timerFinished];
     }
+    
 }
 
 - (void)stopTimer {
