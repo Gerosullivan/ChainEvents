@@ -57,7 +57,7 @@
     self.coachMark_start.hidden = YES;
     
     // On App start, check to see if there was a previous timer running
-    if ([GOTimersState currentState].currentTimerIndex > 0) {
+    if ([GOTimersState currentState].isActive || [GOTimersState currentState].currentTimerIndex > 0) {
         self.tabBarController.selectedIndex = 1;
     }
 }

@@ -46,6 +46,7 @@
         if (!_privateTimers) {
             _privateTimers = [[NSMutableArray alloc] init];
         }
+        
     }
     
     return self;

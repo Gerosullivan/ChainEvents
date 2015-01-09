@@ -53,6 +53,7 @@
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
+//    NSLog(highlighted ? @"setHighlighted true" : @"setHighlighted false");
     if (highlighted) {
         self.titleLabel.textColor = [UIColor whiteColor];
         [self.circleLayer setFillColor:self.currentColor.CGColor];
@@ -63,13 +64,17 @@
 }
 
 - (void)changeToSecondaryColor:(UIColor *)color {
+    // NSLog(@"CircleButton changeToSecondaryColor: %@", color);
     self.currentColor = color;
     self.titleLabel.textColor = self.currentColor;
+    [self setTitleColor:self.currentColor forState:UIControlStateNormal];
 }
 
 - (void)changeToPrimaryColor {
+    // NSLog(@"CircleButton changeToPrimaryColor");
     self.currentColor = self.color;
     self.titleLabel.textColor = self.currentColor;
+    [self setTitleColor:self.currentColor forState:UIControlStateNormal];
 }
 
 - (CGSize)intrinsicContentSize {

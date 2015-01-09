@@ -60,18 +60,44 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    NSLog([GOTimersState currentState].isActive ? @"viewWillAppear, currentState = Active" : @"viewWillAppear, currentState = NOT Active");
-    
+    // Refresh the Timer instances list & set to local property for ledgability
     [[GOTimerStore sharedStore] populateTimerInstancesList];
     self.allTimers = [GOTimerStore sharedStore].allTimerInstances;
     
-    // Reload the timer if timer not running,
-    // as it could have been modified since first loaded
-    if ([GOTimersState currentState].isActive == NO) {
+    NSInteger currentTimerIndex = [GOTimersState currentState].currentTimerIndex;
+    self.thisTimer = self.allTimers[currentTimerIndex][0];
+    
+    if ([GOTimersState currentState].isActive) {
+        // Timer is running or Paused
+        // Figure out if the app has scheduled a local notification (timer running)
+        if ([[UIApplication sharedApplication] scheduledLocalNotifications].count > 0) {
+            NSLog(@"Timer is running");
+            // Restart the timer as the App could be resuming from cold start
+            [self resumeTimer];
+        } else {
+            NSLog(@"Timer paused");
+            self.countdownFrom = [GOTimersState currentState].countdownRemaining;
+            [self updateBigTimerLabel];
+            self.isPaused = YES;
+        }
+        
+    } else {
+        // No timers running
         [self resetTimer];
-        [self makeTimerNames];
     }
     
+    [self updateNavbarTitleAndCurrentNextTimerLabels];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated  {
+    [super viewDidAppear:animated];
+    NSLog(@"viewDidAppear");
+    // Drawing of circle buttons happens before this call
+    // but after viewWillAppear, so refresh here
+    [self setStartResetButtonState];
+    
+    [self pauseTimer];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,7 +113,7 @@
     
     [GOTimersState currentState].countdownRemaining = self.countdownFrom - timeInterval;
     
-    [self makeTimerString];
+    [self updateBigTimerLabel];
     
     if ([GOTimersState currentState].countdownRemaining <= 0) {
         [self timerFinished];
@@ -103,22 +129,17 @@
 
 - (void)resetTimer {
     NSLog(@"resetTimer");
-    [self.playButton changeToPrimaryColor];
-    [self.playButton setTitle:@"Start" forState:UIControlStateNormal];
     
-    [self.pauseButton setTitle:@"Pause" forState:UIControlStateNormal];
-    self.isPaused = NO;
-    self.pauseButton.alpha = 0.5;
-    [self.pauseButton setEnabled:NO];
-    
-    NSInteger currentTimerIndex = [GOTimersState currentState].currentTimerIndex;
-    self.thisTimer = self.allTimers[currentTimerIndex][0];
     self.countdownFrom = self.thisTimer.timerDuration;
     
     [GOTimersState currentState].countdownRemaining = self.thisTimer.timerDuration;
-    [self makeTimerString];
+    [self updateBigTimerLabel];
     
     [GOTimersState currentState].isActive = NO;
+    [self setStartResetButtonState];
+    self.isPaused = NO;
+    [self setPauseButtonState:@"Disabled"];
+
     
     if ([GOTimersState currentState].currentTimerIndex +1 < self.allTimers.count){
         self.navigationItem.rightBarButtonItem = self.nextButton;
@@ -134,38 +155,63 @@
 
 }
 
+- (void)resumeTimer {
+    NSLog(@"resumeTimer");
+    self.countdownFrom = [GOTimersState currentState].countdownRemaining;
+    [self startTimer];
+}
+
 - (void)pauseTimer {
     NSLog(@"Pause timer");
     if (self.isPaused) {
-        [self startTimer];
-        [self.pauseButton setTitle:@"Pause" forState:UIControlStateNormal];
-        self.isPaused = NO;
-    } else {
         [self stopTimer];
-        [self.pauseButton setTitle:@"Resume" forState:UIControlStateNormal];
-        self.isPaused = YES;
+        [self setPauseButtonState:@"Paused"];
         self.countdownFrom = [GOTimersState currentState].countdownRemaining;
+    } else {
+        [self startTimer];
+        [self setPauseButtonState:@"Default"];
+    }
+}
+
+- (void)setPauseButtonState:(NSString *)forState {
+    // Set to "Default" (unPaused state)
+    [self.pauseButton setTitle:@"Pause" forState:UIControlStateNormal];
+    [self.pauseButton setEnabled:YES];
+    self.pauseButton.alpha = 1;
+    
+    if ([forState  isEqual: @"Disabled"]) {
+        self.pauseButton.alpha = 0.5;
+        [self.pauseButton setEnabled:NO];
+    } else if ([forState  isEqual: @"Paused"]) {
+        [self.pauseButton setTitle:@"Resume" forState:UIControlStateNormal];
+    }
+}
+
+- (void)setStartResetButtonState {
+    NSLog(@"setStartResetButtonState");
+    if ([GOTimersState currentState].isActive) {
+        NSLog(@"change to secondary color");
+        [self.playButton changeToSecondaryColor:[UIColor colorWithRed:1 green:0.15 blue:0 alpha:1]];
+        [self.playButton setTitle:@"Reset" forState:UIControlStateNormal];
+    } else {
+        [self.playButton changeToPrimaryColor];
+        [self.playButton setTitle:@"Start" forState:UIControlStateNormal];
     }
 }
 
 - (void)startTimer {
-    [self.playButton changeToSecondaryColor:[UIColor colorWithRed:1 green:0.15 blue:0 alpha:1]];
-    [self.playButton setTitle:@"Reset" forState:UIControlStateNormal];
-    
-    [self.pauseButton setEnabled:YES];
-    self.pauseButton.alpha = 1;
-    self.isPaused = NO;
+    NSLog(@"StartTimer");
     
     self.navigationItem.leftBarButtonItem = nil;
     self.navigationItem.rightBarButtonItem = nil;
+    
+    self.startDate = [NSDate date];
     
     // Kill any repeating scheduled timers
     if (self.repeatingTimer) {
         [self.repeatingTimer invalidate];
         self.repeatingTimer = nil;
     }
-    
-    self.startDate = [NSDate date];
     
     self.repeatingTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
                                                      target:self
@@ -174,8 +220,11 @@
                                                     repeats:YES];
     
     [GOTimersState currentState].isActive = YES;
+    
+    [self setStartResetButtonState];
+    [self setPauseButtonState:@"Default"];
 
-    // Create Local Notification alerm to go off when timer finishes
+    // Create Local Notification alarm to go off when timer finishes
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     
     UILocalNotification *alarm = [[UILocalNotification alloc] init];
@@ -189,23 +238,23 @@
     
 }
 
-- (void)makeTimerString {
+- (void)updateBigTimerLabel {
     GOTimeDateFormatter *formatter = [[GOTimeDateFormatter alloc] init];
     self.timerLabel.text = [formatter clockTime:[GOTimersState currentState].countdownRemaining];
-    [self makeTimeLeftAndDone];
+    [self updateTimeLeftAndDoneLabels];
 }
 
-- (void)makeTimeLeftAndDone {
+- (void)updateTimeLeftAndDoneLabels {
     // Work out how much time is left
     int timeLeft = 0;
     int timeDone = 0;
     for (NSInteger x =  0 ; x < [self.allTimers count] ; x ++) {
-        GOTimer *thisTimer = self.allTimers[x][0];
+        GOTimer *t = self.allTimers[x][0];
         
         if (x < [GOTimersState currentState].currentTimerIndex) {
-            timeDone += thisTimer.timerDuration;
+            timeDone += t.timerDuration;
         } else if (x > [GOTimersState currentState].currentTimerIndex) {
-            timeLeft += thisTimer.timerDuration;
+            timeLeft += t.timerDuration;
         }
     }
     timeLeft += [GOTimersState currentState].countdownRemaining;
@@ -228,7 +277,7 @@
     
 }
 
-- (void)makeTimerNames {
+- (void)updateNavbarTitleAndCurrentNextTimerLabels {
     NSLog(@"makeTimerNames");
     // Get the total number of timers, including repeats
     NSInteger totalTimers = [self.allTimers count];
@@ -290,7 +339,7 @@
         self.thisTimer = self.allTimers[[GOTimersState currentState].currentTimerIndex][0];
         [GOTimersState currentState].timerOrderIndex = [[[GOTimerStore sharedStore] allTimers] indexOfObjectIdenticalTo:self.thisTimer];
         [self resetTimer];
-        [self makeTimerNames];
+        [self updateNavbarTitleAndCurrentNextTimerLabels];
     }
     
 }
@@ -325,6 +374,7 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    NSLog(@"Create circle buttons & status");
     
     int buttonSize = 90;
     
@@ -336,7 +386,7 @@
     self.playButton = [[CircleLineButton alloc] initWithFrame:CGRectMake(0, 0, buttonSize, buttonSize)];
     [self.playButton drawCircleButton:[UIColor colorWithRed:0.3 green:0.85 blue:0.39 alpha:1]];
     [self.playButton setTitle:@"Start" forState:UIControlStateNormal];
-    [self.playButton addTarget:self action:@selector(playTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.playButton addTarget:self action:@selector(startResetTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     self.playButton.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -360,7 +410,7 @@
     self.statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, footerButtons.frame.size.width, 30)];
     self.statusLabel.backgroundColor = [UIColor clearColor];
     self.statusLabel.text = @"3h 50m remaining. Finish at 12:34 PM.";
-    [self makeTimeLeftAndDone];
+    [self updateTimeLeftAndDoneLabels];
     self.statusLabel.textColor = [UIColor lightGrayColor];
     self.statusLabel.textAlignment = NSTextAlignmentCenter;
     
@@ -410,7 +460,7 @@
 
 #pragma mark - Button Actions
 
--(IBAction)playTouched:(id)sender {
+-(IBAction)startResetTouched:(id)sender {
     if ([self.playButton.titleLabel.text isEqual: @"Start"]) {
         NSLog(@"Start touched");
         [self startTimer];
@@ -423,6 +473,7 @@
 }
 
 -(IBAction)pauseTouched:(id)sender {
+    self.isPaused = !self.isPaused;
     [self pauseTimer];
 }
 

@@ -31,7 +31,8 @@
     
     UILocalNotification *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (localNotif) {
-        //Launched cold with notification
+        //Launched cold by notification alarm event
+        [GOTimerStore sharedStore];
         [self showEndTimerAlert];
     }
     
@@ -88,6 +89,7 @@
 - (void)showEndTimerAlert {
     self.alertView = nil;
     NSString *alertTitle;
+    [[GOTimerStore sharedStore] populateTimerInstancesList];
     if ([GOTimersState currentState].currentTimerIndex +1 == [GOTimerStore sharedStore].allTimerInstances.count){
         // No more timers in the queue
         alertTitle = @"There are no more timers.";
