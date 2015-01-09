@@ -16,6 +16,7 @@
 // Alert elements
 @property (nonatomic) UIAlertView *alertView;
 @property (nonatomic, retain) AVAudioPlayer *soundPlayer;
+@property (nonatomic) UITabBarController *tabBarController;
 
 @end
 
@@ -35,6 +36,8 @@
         [GOTimerStore sharedStore];
         [self showEndTimerAlert];
     }
+    
+    self.tabBarController = (UITabBarController *)self.window.rootViewController;
     
     return YES;
 }
@@ -70,8 +73,7 @@
 #pragma mark - Alert View Actions
 - (void)didPresentAlertView:(UIAlertView *)alertView {
     // Regardless of which tabbar we are on - go to the Play VC
-    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-    tabBarController.selectedIndex = 1;
+    self.tabBarController.selectedIndex = 1;
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
@@ -79,8 +81,7 @@
         [self.soundPlayer stop];
     
     // Access the Play VC and call the next Timer via loadTimer
-    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-    UINavigationController *nc = tabBarController.viewControllers[tabBarController.selectedIndex];
+    UINavigationController *nc = self.tabBarController.viewControllers[self.tabBarController.selectedIndex];
     GOPlayViewController *pc = (GOPlayViewController *) nc.topViewController;
     [pc loadTimer:1];
     

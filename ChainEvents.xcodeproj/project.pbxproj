@@ -25,6 +25,7 @@
 		C2BFFBCF1A45D63D00DF8E56 /* GOTimeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C2BFFBCE1A45D63D00DF8E56 /* GOTimeDateFormatter.m */; };
 		C2BFFBD11A477B5E00DF8E56 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2BFFBD01A477B5E00DF8E56 /* Images.xcassets */; };
 		C2BFFBD51A48C94000DF8E56 /* GOTimersState.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2BFFBD41A48C94000DF8E56 /* GOTimersState.plist */; };
+		C2C79B741A60847800DD3959 /* GOTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C79B731A60847800DD3959 /* GOTabBarController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,8 @@
 		C2BFFBCE1A45D63D00DF8E56 /* GOTimeDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOTimeDateFormatter.m; sourceTree = "<group>"; };
 		C2BFFBD01A477B5E00DF8E56 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C2BFFBD41A48C94000DF8E56 /* GOTimersState.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GOTimersState.plist; sourceTree = "<group>"; };
+		C2C79B721A60847800DD3959 /* GOTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOTabBarController.h; sourceTree = "<group>"; };
+		C2C79B731A60847800DD3959 /* GOTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOTabBarController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +172,8 @@
 		C22F43101A447C630078A651 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				C2C79B721A60847800DD3959 /* GOTabBarController.h */,
+				C2C79B731A60847800DD3959 /* GOTabBarController.m */,
 				C28F1D931A3CC82A00531EE3 /* GOPlayViewController.h */,
 				C28F1D941A3CC82A00531EE3 /* GOPlayViewController.m */,
 				C275654A1A3F7E290094116E /* CircleLineButton.h */,
@@ -305,6 +310,7 @@
 				7A715FAB1A2E2085008874EC /* GOTimer.m in Sources */,
 				7ADA4D051A37B46F0088B3D9 /* GORepeatViewController.m in Sources */,
 				C22F430E1A43849D0078A651 /* GOTimersState.m in Sources */,
+				C2C79B741A60847800DD3959 /* GOTabBarController.m in Sources */,
 				C275654C1A3F7E290094116E /* CircleLineButton.m in Sources */,
 				7A6599651A379ED200212583 /* GODetailViewController.m in Sources */,
 			);
