@@ -120,6 +120,7 @@
         [self.soundPlayer setDelegate: self];
         
         [self.soundPlayer play];
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     }
     
 }

@@ -47,7 +47,7 @@
 		7A715FA71A2E1D75008874EC /* GOTimerStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOTimerStore.m; sourceTree = "<group>"; };
 		7A715FA91A2E2085008874EC /* GOTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOTimer.h; sourceTree = "<group>"; };
 		7A715FAA1A2E2085008874EC /* GOTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GOTimer.m; sourceTree = "<group>"; };
-		7A9DE95F1A1FA70900D10C37 /* ChainEvents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChainEvents.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A9DE95F1A1FA70900D10C37 /* Chain Events.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chain Events.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A9DE9631A1FA70900D10C37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A9DE9641A1FA70900D10C37 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7A9DE9661A1FA70900D10C37 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 		7A9DE9601A1FA70900D10C37 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7A9DE95F1A1FA70900D10C37 /* ChainEvents.app */,
+				7A9DE95F1A1FA70900D10C37 /* Chain Events.app */,
 				7A9DE97B1A1FA70900D10C37 /* ChainEventsTests.xctest */,
 			);
 			name = Products;
@@ -200,9 +200,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7A9DE95E1A1FA70900D10C37 /* ChainEvents */ = {
+		7A9DE95E1A1FA70900D10C37 /* Chain Events */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7A9DE9851A1FA70900D10C37 /* Build configuration list for PBXNativeTarget "ChainEvents" */;
+			buildConfigurationList = 7A9DE9851A1FA70900D10C37 /* Build configuration list for PBXNativeTarget "Chain Events" */;
 			buildPhases = (
 				7A9DE95B1A1FA70900D10C37 /* Sources */,
 				7A9DE95C1A1FA70900D10C37 /* Frameworks */,
@@ -212,9 +212,9 @@
 			);
 			dependencies = (
 			);
-			name = ChainEvents;
+			name = "Chain Events";
 			productName = ChainEvents;
-			productReference = 7A9DE95F1A1FA70900D10C37 /* ChainEvents.app */;
+			productReference = 7A9DE95F1A1FA70900D10C37 /* Chain Events.app */;
 			productType = "com.apple.product-type.application";
 		};
 		7A9DE97A1A1FA70900D10C37 /* ChainEventsTests */ = {
@@ -267,7 +267,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7A9DE95E1A1FA70900D10C37 /* ChainEvents */,
+				7A9DE95E1A1FA70900D10C37 /* Chain Events */,
 				7A9DE97A1A1FA70900D10C37 /* ChainEventsTests */,
 			);
 		};
@@ -329,7 +329,7 @@
 /* Begin PBXTargetDependency section */
 		7A9DE97D1A1FA70900D10C37 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7A9DE95E1A1FA70900D10C37 /* ChainEvents */;
+			target = 7A9DE95E1A1FA70900D10C37 /* Chain Events */;
 			targetProxy = 7A9DE97C1A1FA70900D10C37 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -391,6 +391,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "Chain Events";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -426,6 +427,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "Chain Events";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -440,9 +442,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ChainEvents/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Chain Events";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -456,9 +458,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ChainEvents/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Chain Events";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -510,7 +512,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7A9DE9851A1FA70900D10C37 /* Build configuration list for PBXNativeTarget "ChainEvents" */ = {
+		7A9DE9851A1FA70900D10C37 /* Build configuration list for PBXNativeTarget "Chain Events" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7A9DE9861A1FA70900D10C37 /* Debug */,

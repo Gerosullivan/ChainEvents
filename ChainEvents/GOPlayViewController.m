@@ -280,7 +280,7 @@
     
     NSString *formattedDateString = [dateFormatter stringFromDate:finish];
     
-    self.statusLabel.text = [NSString stringWithFormat:@"%@ left, Finish at %@", timeLeftHMS, formattedDateString];
+    self.statusLabel.text = [NSString stringWithFormat:@"%@ left, finish at %@", timeLeftHMS, formattedDateString];
     
     // Total time done
     self.totalTimeLabel.text = [formatter clockTime:timeDone];
@@ -419,7 +419,7 @@
     
     self.statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, footerButtons.frame.size.width, 30)];
     self.statusLabel.backgroundColor = [UIColor clearColor];
-    self.statusLabel.text = @"3h 50m remaining. Finish at 12:34 PM.";
+    self.statusLabel.text = @" ";
     [self updateTimeLeftAndDoneLabels];
     self.statusLabel.textColor = [UIColor lightGrayColor];
     self.statusLabel.textAlignment = NSTextAlignmentCenter;
@@ -440,7 +440,7 @@
     
     
     NSArray *horizontalConstraint3 = [NSLayoutConstraint
-                                      constraintsWithVisualFormat:@"H:|-40-[statusLabel]-40-|"
+                                      constraintsWithVisualFormat:@"H:|-0-[statusLabel]-0-|"
                                       options:0
                                       metrics:nil
                                       views:nameMap];
